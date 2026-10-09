@@ -138,14 +138,21 @@ export function OngoingTable() {
               </thead>
               <tbody>
                 {clients.map((client, i) => (
-                  <tr key={i} className="border-b border-[#1a1a1a] last:border-0 hover:bg-[#111]/50 transition-colors relative group">
+                  <tr 
+                    key={client.id || i} 
+                    onClick={() => window.location.href = `/dashboard/clients/${client.id}`}
+                    className="border-b border-[#1a1a1a] last:border-0 hover:bg-[#151515] transition-colors relative group cursor-pointer"
+                  >
                     <td className="px-6 py-4">
-                      <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <div className="absolute left-0 top-0 bottom-0 w-1 bg-orange-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                       <div className="flex items-center gap-3">
                         <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-xs ${client.color}`}>
                           {client.name.charAt(0).toUpperCase()}
                         </div>
-                        <div className="font-bold text-[13px] text-white">{client.name}</div>
+                        <div className="font-bold text-[13px] text-white group-hover:text-orange-400 transition-colors flex items-center gap-1.5">
+                          {client.name}
+                          <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-orange-400" />
+                        </div>
                       </div>
                     </td>
                     <td className="px-6 py-4">
