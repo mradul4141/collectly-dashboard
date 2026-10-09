@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Loader2, Search, Filter, MoreHorizontal, ArrowUpRight, DollarSign, Calendar, Clock, AlertCircle, Printer } from "lucide-react";
+import { Loader2, Search, Filter, MoreHorizontal, ArrowUpRight, DollarSign, Calendar, Clock, AlertCircle, Printer, Download } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 
 export function InvoiceTable({ refreshKey = 0 }: { refreshKey?: number }) {
   const [invoices, setInvoices] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
   
   const supabase = createClient();
 
@@ -75,11 +76,38 @@ export function InvoiceTable({ refreshKey = 0 }: { refreshKey?: number }) {
     }
   };
 
-  const filteredInvoices = invoices.filter(inv => 
-    inv.invoice_number?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    inv.clients?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    inv.clients?.company?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredInvoices = invoices.filter(inv => {
+    const matchesSearch = 
+      inv.invoice_number?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      inv.clients?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      inv.clients?.company?.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    const matchesStatus = statusFilter === "all" || inv.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
+  const handleExportCSV = () => {
+    if (filteredInvoices.length === 0) return;
+    const headers = ["Invoice Number", "Client Name", "Company", "Amount", "Due Date", "Status", "Platform"];
+    const rows = filteredInvoices.map(inv => [
+      inv.invoice_number || "",
+      `"${inv.clients?.name || ""}"`,
+      `"${inv.clients?.company || ""}"`,
+      inv.amount || 0,
+      inv.due_date || "",
+      inv.status || "",
+      inv.platform || "MANUAL"
+    ]);
+
+    const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `collectly_invoices_${new Date().toISOString().split("T")[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <div className="flex flex-col h-full bg-[#0a0a0a] rounded-[24px]">
@@ -87,7 +115,9 @@ export function InvoiceTable({ refreshKey = 0 }: { refreshKey?: number }) {
       <div className="px-6 py-5 border-b border-[#1a1a1a] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <h3 className="font-bold text-[15px] text-white">All Invoices</h3>
-          <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-[#1a1a1a] text-gray-300">{invoices.length} total</span>
+          <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-[#1a1a1a] text-gray-300">
+            {filteredInvoices.length} of {invoices.length}
+          </span>
         </div>
         
         <div className="flex items-center gap-3">
@@ -98,12 +128,32 @@ export function InvoiceTable({ refreshKey = 0 }: { refreshKey?: number }) {
               placeholder="Search invoices..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="bg-[#111] border border-[#222] rounded-full pl-9 pr-4 py-1.5 text-[13px] text-white font-medium outline-none focus:border-orange-500 transition-colors w-[220px] placeholder:text-gray-600"
+              className="bg-[#111] border border-[#222] rounded-full pl-9 pr-4 py-1.5 text-[13px] text-white font-medium outline-none focus:border-orange-500 transition-colors w-[200px] placeholder:text-gray-600"
             />
           </div>
-          <button className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#111] border border-[#222] text-gray-300 text-[12px] font-bold hover:bg-[#1a1a1a] hover:text-white transition-colors">
-            <Filter className="w-3.5 h-3.5" />
-            Filter
+
+          {/* Status Filter Dropdown */}
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="bg-[#111] border border-[#222] rounded-full px-3 py-1.5 text-[12px] font-bold text-gray-300 outline-none focus:border-orange-500 transition-colors cursor-pointer"
+          >
+            <option value="all">All Statuses</option>
+            <option value="due_soon">Due Soon</option>
+            <option value="overdue">Overdue</option>
+            <option value="promised">Promised</option>
+            <option value="disputed">Disputed</option>
+            <option value="paid">Paid</option>
+          </select>
+
+          {/* Export CSV Button */}
+          <button 
+            onClick={handleExportCSV}
+            title="Export filtered invoices to CSV"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#111] border border-[#222] text-gray-300 text-[12px] font-bold hover:bg-[#1a1a1a] hover:text-white transition-colors"
+          >
+            <Download className="w-3.5 h-3.5 text-orange-500" />
+            Export CSV
           </button>
         </div>
       </div>
