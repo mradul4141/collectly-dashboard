@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Loader2, Search, Filter, MoreHorizontal, ArrowUpRight, DollarSign, Calendar, Clock, AlertCircle } from "lucide-react";
+import { Loader2, Search, Filter, MoreHorizontal, ArrowUpRight, DollarSign, Calendar, Clock, AlertCircle, Printer } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 
 export function InvoiceTable({ refreshKey = 0 }: { refreshKey?: number }) {
@@ -153,6 +153,15 @@ export function InvoiceTable({ refreshKey = 0 }: { refreshKey?: number }) {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right flex items-center justify-end gap-2">
+                      <a 
+                        href={`/invoice/${inv.id}`} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        title="Print / Download PDF" 
+                        className="p-1.5 rounded-md hover:bg-white/10 text-gray-400 hover:text-white transition-colors"
+                      >
+                        <Printer className="w-4 h-4" />
+                      </a>
                       {inv.payment_link && (
                         <a href={inv.payment_link} target="_blank" rel="noreferrer" title="Open Stripe Payment Link" className="p-1.5 rounded-md hover:bg-orange-500/10 text-orange-500 transition-colors">
                           <DollarSign className="w-4 h-4" />
