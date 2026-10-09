@@ -1,10 +1,30 @@
 "use client";
 
 import Link from "next/link";
-import { Home, Users, Layout, Clock, FileText, Send, CheckSquare, DollarSign, PieChart, Calculator, HelpCircle } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Home, Users, Layout, Clock, FileText, Send, CheckSquare, DollarSign, PieChart, Calculator, HelpCircle, LogOut } from "lucide-react";
 import { motion } from "framer-motion";
+import { createClient } from "@/utils/supabase/client";
 
 export function Sidebar() {
+  const [userEmail, setUserEmail] = useState<string>("admin@collectly.app");
+  const supabase = createClient();
+
+  useEffect(() => {
+    async function getUser() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user?.email) {
+        setUserEmail(user.email);
+      }
+    }
+    getUser();
+  }, [supabase]);
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    window.location.href = "/login";
+  };
+
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -129,17 +149,26 @@ export function Sidebar() {
             Settings
           </Link>
         </motion.div>
-        <motion.div whileHover={{ scale: 1.02 }} className="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-gray-900 rounded-[12px] transition-colors">
-          <div className="w-8 h-8 rounded-full bg-orange-500/20 border border-orange-500/30 flex items-center justify-center text-orange-500 font-bold text-sm">
-            L
-          </div>
-          <div>
-            <div className="font-bold text-[13px] text-white">Leonardo</div>
-            <div className="text-[10px] text-gray-500 flex items-center gap-1">
-              <motion.span animate={{ opacity: [1, 0.5, 1] }} transition={{ repeat: Infinity, duration: 1.5 }} className="w-1.5 h-1.5 rounded-full bg-green-500"></motion.span> Online
+        <div className="flex items-center justify-between px-3 py-2 bg-[#111] border border-gray-900 rounded-[14px]">
+          <div className="flex items-center gap-2.5 overflow-hidden">
+            <div className="w-7 h-7 rounded-full bg-orange-500/20 border border-orange-500/30 flex items-center justify-center text-orange-500 font-bold text-xs uppercase shrink-0">
+              {userEmail.charAt(0)}
+            </div>
+            <div className="truncate">
+              <div className="font-bold text-[12px] text-white truncate max-w-[120px]">{userEmail.split('@')[0]}</div>
+              <div className="text-[10px] text-emerald-400 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Online
+              </div>
             </div>
           </div>
-        </motion.div>
+          <button 
+            onClick={handleSignOut}
+            title="Log Out"
+            className="p-1.5 text-gray-500 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors"
+          >
+            <LogOut className="w-4 h-4" />
+          </button>
+        </div>
       </motion.div>
     </div>
   );
