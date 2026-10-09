@@ -1,11 +1,24 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Sidebar } from "@/components/sidebar";
-import { Topbar } from "@/components/topbar";
 
 export const metadata: Metadata = {
-  title: "CollectWise - SaaS Dashboard",
-  description: "Payment-Chasing SaaS",
+  title: "Collectly - Automated Payment Chasing for Agencies",
+  description: "Stop chasing unpaid invoices. Collectly automates your AR so you can focus on creative work.",
+  openGraph: {
+    title: "Collectly",
+    description: "Automated payment chasing for creative agencies.",
+    url: "https://collectly.app",
+    siteName: "Collectly",
+    images: [
+      {
+        url: "https://collectly.app/og-image.jpg",
+        width: 1200,
+        height: 630,
+      }
+    ],
+    locale: "en_US",
+    type: "website",
+  }
 };
 
 export default function RootLayout({
@@ -15,14 +28,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="h-screen w-screen overflow-hidden flex bg-[#f6f5f2] antialiased">
-        <Sidebar />
-        <div className="flex-1 flex flex-col h-full overflow-hidden bg-[var(--background)]">
-          <Topbar />
-          <main className="flex-1 overflow-auto p-8">
-            {children}
-          </main>
-        </div>
+      <body className="antialiased min-h-screen bg-slate-50 text-slate-900">
+        {children}
       </body>
     </html>
   );

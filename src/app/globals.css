@@ -6,8 +6,8 @@
 }
 
 :root {
-  --background: #ebebeb;
-  --foreground: #0f172a;
+  --background: #000000;
+  --foreground: #ffffff;
 }
 
 body {
@@ -19,9 +19,9 @@ body {
 
 /* Solid Dashboard utilities */
 .glass {
-  @apply bg-[#FBFBFA] border-r border-[#ECEAE4];
+  @apply bg-[#000000] border-r border-[#1a1a1a];
 }
 
 .glass-card {
-  @apply bg-white rounded-2xl border border-[#ECEAE4] shadow-sm;
+  @apply bg-[#0a0a0a] rounded-[24px] border border-[#1a1a1a] shadow-xl;
 }

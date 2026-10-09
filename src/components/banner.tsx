@@ -1,13 +1,15 @@
+import { Lightbulb } from "lucide-react";
+
 export function Banner() {
   return (
     <div className="glass rounded-[24px] p-6 flex items-center justify-between mb-8">
       <div className="flex items-start gap-4">
-        <div className="p-3 bg-amber-50 rounded-xl">
-          <span className="text-xl">💡</span>
+        <div className="p-3 bg-amber-50 rounded-xl text-amber-500">
+          <Lightbulb className="w-5 h-5" />
         </div>
         <div>
           <div className="flex items-center gap-3 mb-1">
-            <h2 className="font-bold text-[14px] text-slate-900 tracking-wider">HOW DREELIO KEEPS CASH FLOW FLOWING</h2>
+            <h2 className="font-bold text-[14px] text-slate-900 tracking-wider">HOW COLLECTLY KEEPS CASH FLOW FLOWING</h2>
             <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-700">Live System</span>
           </div>
           <p className="text-[12px] font-medium text-slate-500">
