@@ -43,6 +43,21 @@ export function InvoiceTable({ refreshKey = 0 }: { refreshKey?: number }) {
     }
   };
 
+  const handleUpdateStatus = async (invoiceId: string, newStatus: string) => {
+    try {
+      // Optimistic update
+      setInvoices(prev => prev.map(inv => inv.id === invoiceId ? { ...inv, status: newStatus } : inv));
+      const { error } = await supabase
+        .from('invoices')
+        .update({ status: newStatus })
+        .eq('id', invoiceId);
+      if (error) throw error;
+    } catch (err) {
+      console.error("Failed to update invoice status", err);
+      fetchInvoices();
+    }
+  };
+
   // Helper to style badges based on status
   const getStatusConfig = (status: string) => {
     switch (status.toLowerCase()) {
@@ -140,12 +155,17 @@ export function InvoiceTable({ refreshKey = 0 }: { refreshKey?: number }) {
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border ${statusObj.bg} ${statusObj.border} ${statusObj.color}`}>
-                        {statusObj.icon}
-                        <span className="text-[11px] font-bold capitalize">
-                          {inv.status.replace('_', ' ')}
-                        </span>
-                      </div>
+                      <select
+                        value={inv.status}
+                        onChange={(e) => handleUpdateStatus(inv.id, e.target.value)}
+                        className={`text-[11px] font-bold capitalize px-2.5 py-1 rounded-full border outline-none cursor-pointer transition-all ${statusObj.bg} ${statusObj.border} ${statusObj.color} bg-opacity-80 hover:opacity-100`}
+                      >
+                        <option value="due_soon" className="bg-[#111] text-gray-300">Due Soon</option>
+                        <option value="overdue" className="bg-[#111] text-rose-400">Overdue</option>
+                        <option value="promised" className="bg-[#111] text-blue-400">Promised</option>
+                        <option value="disputed" className="bg-[#111] text-amber-400">Disputed</option>
+                        <option value="paid" className="bg-[#111] text-emerald-400">Paid</option>
+                      </select>
                     </td>
                     <td className="px-6 py-4">
                       <span className="text-[12px] font-bold text-gray-400 px-2 py-1 bg-[#151515] rounded-md border border-[#222]">
