@@ -181,7 +181,7 @@ export default function LandingPage() {
             className="flex flex-col md:flex-row items-center gap-6 mb-16"
           >
              <Link href="/login" className="hover:scale-105 active:scale-95 transition-transform duration-200">
-                <RadialGlowButton className="min-w-[190px] min-h-[56px] py-3.5 px-7 text-[16px] font-bold shadow-[0_0_35px_rgba(70,147,150,0.35)]">
+                <RadialGlowButton className="min-w-[190px] min-h-[56px] py-3.5 px-7 text-[16px] font-bold shadow-[0_0_35px_rgba(249,115,22,0.4)]">
                   Get Started
                   <div className="bg-white/20 text-white rounded-full w-7 h-7 flex items-center justify-center ml-2">
                     <ArrowRight className="w-4 h-4 -rotate-45"/>
