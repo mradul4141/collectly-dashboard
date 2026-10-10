@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { User, Mail, Clock, AlertCircle, Star, TrendingUp, ArrowRight } from "lucide-react";
 import WaveGridBackground from "@/components/wave-grid-background";
+import RadialGlowButton from "@/components/radial-glow-button";
 
 export default function LandingPage() {
   const [activeTab, setActiveTab] = useState("Desktop");
@@ -119,11 +120,13 @@ export default function LandingPage() {
 
         {/* CTA */}
         <div className="pointer-events-auto">
-           <Link href="/login" className="flex items-center gap-2 bg-white text-black pl-5 pr-2 py-2 rounded-full text-[13px] font-bold hover:bg-gray-200 transition-colors shadow-lg hover:scale-105 active:scale-95 duration-200">
-              Let's Collaborate 
-              <div className="bg-black text-white rounded-full w-6 h-6 flex items-center justify-center ml-2">
-                <ArrowRight className="w-3 h-3 -rotate-45"/>
-              </div>
+           <Link href="/login">
+              <RadialGlowButton className="min-w-[140px] min-h-[44px] py-2 px-5 text-[13px] rounded-full">
+                Let's Collaborate
+                <div className="bg-white/20 text-white rounded-full w-5 h-5 flex items-center justify-center ml-1">
+                  <ArrowRight className="w-3 h-3 -rotate-45"/>
+                </div>
+              </RadialGlowButton>
            </Link>
         </div>
       </div>
@@ -135,17 +138,19 @@ export default function LandingPage() {
         <section className="w-full flex flex-col items-center min-h-[90vh] relative">
           
           {/* Interactive 3D Wave Grid Theme Background */}
-          <div className="absolute inset-0 -top-32 w-full h-[120%] pointer-events-auto z-0 overflow-hidden opacity-75">
+          <div className="absolute inset-0 -top-32 w-full h-[120%] pointer-events-auto z-0 overflow-hidden opacity-90">
             <WaveGridBackground 
               colorBase="#0a0a0a" 
               colorHigh="#f97316" 
-              gridSize={38}
-              waveAmplitude={0.45}
-              waveSpeed={5.5}
+              gridSize={40}
+              waveAmplitude={0.7}
+              waveSpeed={7.5}
+              waveFrequency={1.4}
+              waveWidth={3.5}
             />
-            {/* Top & bottom radial/gradient blending so text stays crisp */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#060606]/80 via-transparent to-[#060606] pointer-events-none" />
-            <div className="absolute inset-0 bg-radial-[circle_at_center_rgba(0,0,0,0.4)] pointer-events-none" />
+            {/* Soft radial/gradient blending so text stays crisp */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#060606]/60 via-transparent to-[#060606] pointer-events-none" />
+            <div className="absolute inset-0 bg-radial-[circle_at_center_rgba(0,0,0,0.3)] pointer-events-none" />
           </div>
 
           <div className="relative z-10 flex flex-col items-center w-full pointer-events-auto">
@@ -175,17 +180,13 @@ export default function LandingPage() {
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             className="flex flex-col md:flex-row items-center gap-6 mb-16"
           >
-             <Link href="/login" className="relative group overflow-hidden flex items-center gap-3 bg-white text-black pl-6 pr-2 py-2 rounded-full font-bold transition-colors hover:scale-105 active:scale-95 duration-200 shadow-[0_0_30px_rgba(255,255,255,0.2)]">
-                <motion.div 
-                  animate={{ x: ["-200%", "300%"] }}
-                  transition={{ repeat: Infinity, duration: 2.5, ease: "linear", repeatDelay: 0.5 }}
-                  className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/80 to-transparent -skew-x-12 z-10"
-                  style={{ mixBlendMode: 'overlay' }}
-                />
-                <span className="relative z-20">Get Started</span>
-                <div className="bg-black text-white rounded-full w-8 h-8 flex items-center justify-center ml-2 relative z-20">
-                  <ArrowRight className="w-4 h-4 -rotate-45 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"/>
-                </div>
+             <Link href="/login" className="hover:scale-105 active:scale-95 transition-transform duration-200">
+                <RadialGlowButton className="min-w-[190px] min-h-[56px] py-3.5 px-7 text-[16px] font-bold shadow-[0_0_35px_rgba(70,147,150,0.35)]">
+                  Get Started
+                  <div className="bg-white/20 text-white rounded-full w-7 h-7 flex items-center justify-center ml-2">
+                    <ArrowRight className="w-4 h-4 -rotate-45"/>
+                  </div>
+                </RadialGlowButton>
              </Link>
              
              <div className="flex items-center gap-4 md:border-l border-gray-800 md:pl-6">

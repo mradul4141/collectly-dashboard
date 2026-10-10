@@ -291,12 +291,17 @@ export function WaveGridBackground({
 
     const raycaster = new THREE.Raycaster();
     const pointerNDC = new THREE.Vector2();
-    const onPointerMove = (e: PointerEvent) => {
+    const onPointerMove = (e: MouseEvent | PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
+      
+      // Calculate normalized device coordinates based on canvas bounding box
+      const clientX = e.clientX;
+      const clientY = e.clientY;
+
       pointerNDC.set(
-        ((e.clientX - rect.left) / rect.width) * 2 - 1,
-        -((e.clientY - rect.top) / rect.height) * 2 + 1,
+        ((clientX - rect.left) / rect.width) * 2 - 1,
+        -((clientY - rect.top) / rect.height) * 2 + 1,
       );
       mouse.copy(pointerNDC);
       raycaster.setFromCamera(pointerNDC, camera);
@@ -309,21 +314,21 @@ export function WaveGridBackground({
         const dx = x - lastPoint.x;
         const dz = z - lastPoint.z;
         distDelta = Math.sqrt(dx * dx + dz * dz);
-        if (distDelta < trailSpacing) return;
+        if (distDelta < 0.05) return;
       }
       if (trail.length >= MAX_TRAIL) trail.shift();
-      trail.push({ x, z, age: 0, distDelta });
+      trail.push({ x, z, age: 0, distDelta: Math.max(distDelta, 0.5) });
       lastPoint = { x, z };
       timeSinceLastMove = 0;
       placingRandom = false;
       randomPointTimer = 0;
     };
-    canvas.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointermove", onPointerMove);
     const onPointerLeave = () => {
       mouse.set(0, 0);
       lastPoint = null;
     };
-    canvas.addEventListener("pointerleave", onPointerLeave);
+    window.addEventListener("pointerleave", onPointerLeave);
 
     const addRandomPoint = () => {
       const x = (Math.random() * 0.5 - 0.25) * bounds;
@@ -470,8 +475,9 @@ export function WaveGridBackground({
       scene.background = new THREE.Color(p.colorBase).multiplyScalar(0.5);
 
       updateTrail(delta);
-      lerpedMouse.x += (mouse.x - lerpedMouse.x) * 0.04;
-      lerpedMouse.y += (mouse.y - lerpedMouse.y) * 0.04;
+      // Smoother and more responsive camera tracking
+      lerpedMouse.x += (mouse.x - lerpedMouse.x) * 0.08;
+      lerpedMouse.y += (mouse.y - lerpedMouse.y) * 0.08;
       positionCamera(lerpedMouse.x, lerpedMouse.y);
       composer.render();
     });
@@ -479,8 +485,8 @@ export function WaveGridBackground({
     return () => {
       renderer.setAnimationLoop(null);
       window.removeEventListener("resize", applySize);
-      canvas.removeEventListener("pointermove", onPointerMove);
-      canvas.removeEventListener("pointerleave", onPointerLeave);
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerleave", onPointerLeave);
       resizeObserver.disconnect();
 
       geometry.dispose();
