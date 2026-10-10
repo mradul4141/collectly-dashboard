@@ -120,9 +120,9 @@ export default function LandingPage() {
 
         {/* CTA */}
         <div className="pointer-events-auto">
-           <Link href="/login">
+           <Link href="/dashboard/capture">
               <RadialGlowButton className="min-w-[140px] min-h-[44px] py-2 px-5 text-[13px] rounded-full">
-                Let's Collaborate
+                Enter Workspace
                 <div className="bg-white/20 text-white rounded-full w-5 h-5 flex items-center justify-center ml-1">
                   <ArrowRight className="w-3 h-3 -rotate-45"/>
                 </div>
@@ -180,9 +180,9 @@ export default function LandingPage() {
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             className="flex flex-col md:flex-row items-center gap-6 mb-16"
           >
-             <Link href="/login" className="hover:scale-105 active:scale-95 transition-transform duration-200">
+             <Link href="/dashboard/capture" className="hover:scale-105 active:scale-95 transition-transform duration-200">
                 <RadialGlowButton className="min-w-[190px] min-h-[56px] py-3.5 px-7 text-[16px] font-bold shadow-[0_0_35px_rgba(249,115,22,0.4)]">
-                  Get Started
+                  Launch Workspace 2.0
                   <div className="bg-white/20 text-white rounded-full w-7 h-7 flex items-center justify-center ml-2">
                     <ArrowRight className="w-4 h-4 -rotate-45"/>
                   </div>
