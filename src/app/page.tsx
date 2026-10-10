@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { User, Mail, Clock, AlertCircle, Star, TrendingUp, ArrowRight } from "lucide-react";
+import WaveGridBackground from "@/components/wave-grid-background";
 
 export default function LandingPage() {
   const [activeTab, setActiveTab] = useState("Desktop");
@@ -131,7 +132,23 @@ export default function LandingPage() {
       <main className="flex-1 w-full flex flex-col items-center pt-32 z-20 relative">
         
         {/* HERO SECTION */}
-        <section className="w-full flex flex-col items-center min-h-[90vh]">
+        <section className="w-full flex flex-col items-center min-h-[90vh] relative">
+          
+          {/* Interactive 3D Wave Grid Theme Background */}
+          <div className="absolute inset-0 -top-32 w-full h-[120%] pointer-events-auto z-0 overflow-hidden opacity-75">
+            <WaveGridBackground 
+              colorBase="#0a0a0a" 
+              colorHigh="#f97316" 
+              gridSize={38}
+              waveAmplitude={0.45}
+              waveSpeed={5.5}
+            />
+            {/* Top & bottom radial/gradient blending so text stays crisp */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#060606]/80 via-transparent to-[#060606] pointer-events-none" />
+            <div className="absolute inset-0 bg-radial-[circle_at_center_rgba(0,0,0,0.4)] pointer-events-none" />
+          </div>
+
+          <div className="relative z-10 flex flex-col items-center w-full pointer-events-auto">
           
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
@@ -297,6 +314,7 @@ export default function LandingPage() {
               <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-[#060606] to-transparent pointer-events-none"></div>
             </motion.div>
           </motion.div>
+          </div>
         </section>
 
         {/* Integrations Marquee */}
