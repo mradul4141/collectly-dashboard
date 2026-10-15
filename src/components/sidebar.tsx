@@ -108,6 +108,20 @@ export function Sidebar() {
             </Link>
           </motion.div>
 
+          <motion.div variants={item}>
+            <Link href="/dashboard/documents" className="flex items-center gap-3 px-3 py-2.5 rounded-[12px] text-gray-400 hover:bg-gray-900 hover:text-white font-medium text-[13px] transition-colors">
+              <FileText className="w-4 h-4 text-purple-400" />
+              Documents & Notes
+            </Link>
+          </motion.div>
+
+          <motion.div variants={item}>
+            <Link href="/dashboard/automations" className="flex items-center gap-3 px-3 py-2.5 rounded-[12px] text-gray-400 hover:bg-gray-900 hover:text-white font-medium text-[13px] transition-colors">
+              <Zap className="w-4 h-4 text-amber-400" />
+              Automations
+            </Link>
+          </motion.div>
+
           {/* Finance & Invoicing Tools (Preserved from 1.0) */}
           <div className="mt-6">
             <button
