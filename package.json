@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "deploy": "npm run build && node prepare_static_deploy.js && npx -y netlify-cli deploy --prod --no-build --dir=.netlify/static",
     "start": "next start",
     "lint": "eslint"
   },
