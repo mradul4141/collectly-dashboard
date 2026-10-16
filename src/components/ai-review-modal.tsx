@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Sparkles, ArrowRight, CheckCircle2, Calendar, Flag, Trash2, Plus, AlertCircle, RefreshCw } from "lucide-react";
+import { Sparkles, ArrowRight, CheckCircle2, Calendar, Trash2, Plus } from "lucide-react";
 import { AIExtractionResult, Priority } from "@/lib/workspace-types";
+import { UfoIllustration } from "@/components/illustrations/retro-space";
 
 interface AIReviewModalProps {
   initialResult: AIExtractionResult;
@@ -52,49 +53,60 @@ export function AIReviewModal({ initialResult, mode, onClose, onApprove }: AIRev
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-      <div className="bg-[#121214] border border-gray-800 rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0A0A0A]/70 backdrop-blur-xs">
+      <div className="bg-[#FFFFFF] border-3 border-[#0A0A0A] rounded-[24px] w-full max-w-2xl overflow-hidden shadow-[10px_10px_0px_#0A0A0A] flex flex-col max-h-[90vh]">
         {/* Modal Header */}
-        <div className="p-6 border-b border-gray-800/80 bg-gradient-to-r from-indigo-950/30 to-purple-950/20 flex items-center justify-between">
+        <div className="p-6 border-b-2 border-[#0A0A0A] bg-[#DEDEC8] flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
-              <Sparkles className="w-5 h-5 animate-pulse" />
+            <div className="w-12 h-12 rounded-2xl bg-[#0A0A0A] flex items-center justify-center text-[#FFFFFF] sticker-shadow-sm flex-shrink-0">
+              <Sparkles className="w-6 h-6" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-lg font-bold text-white tracking-tight">AI Review & Approval</h3>
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${
-                  mode === "live_ai" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : "bg-indigo-500/20 text-indigo-300 border border-indigo-500/30"
-                }`}>
-                  {mode === "live_ai" ? "Gemini Live" : "Smart Parser"}
+                <h3 className="font-display text-base text-[#0A0A0A] tracking-wider uppercase">
+                  TRANSMISSION ANALYSIS
+                </h3>
+                <span className="font-label text-[9px] bg-[#0A0A0A] text-[#FFFFFF] px-2 py-0.5 rounded font-bold">
+                  {mode === "live_ai" ? "GEMINI LIVE" : "SMART PARSER"}
                 </span>
               </div>
-              <p className="text-xs text-gray-400">Review, adjust, and approve AI-generated action items before saving.</p>
+              <p className="font-label text-[11px] text-[#555555] tracking-wider">
+                CONFIRM EXTRACTED FLIGHT ITEMS BEFORE COMMIT
+              </p>
             </div>
           </div>
-          <button onClick={onClose} className="text-gray-400 hover:text-white text-sm font-semibold p-2">✕</button>
+          <button 
+            onClick={onClose} 
+            className="w-8 h-8 rounded-full border-2 border-[#0A0A0A] bg-[#FFFFFF] text-[#0A0A0A] font-bold text-sm flex items-center justify-center sticker-shadow-sm hover:bg-[#F0F0EE] cursor-pointer"
+          >
+            ✕
+          </button>
         </div>
 
         {/* Modal Content */}
-        <div className="p-6 overflow-y-auto space-y-6 flex-1">
+        <div className="p-6 overflow-y-auto space-y-6 flex-1 bg-[#F4F4F0]">
           {/* Objective & Project */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-[11px] font-bold text-gray-400 uppercase tracking-wider block mb-1.5">Identified Objective</label>
+              <label className="font-label text-[10px] text-[#555555] block mb-1.5 font-bold">
+                // DETECTED OBJECTIVE
+              </label>
               <input
                 type="text"
                 value={objective}
                 onChange={(e) => setObjective(e.target.value)}
-                className="w-full bg-[#0a0a0c] border border-gray-800 rounded-xl px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-indigo-500"
+                className="w-full bg-[#FFFFFF] border-2 border-[#0A0A0A] rounded-xl px-3 py-2 text-xs font-mono text-[#0A0A0A] sticker-shadow-sm focus:outline-none"
               />
             </div>
             <div>
-              <label className="text-[11px] font-bold text-gray-400 uppercase tracking-wider block mb-1.5">Assign to Project</label>
+              <label className="font-label text-[10px] text-[#555555] block mb-1.5 font-bold">
+                // TARGET PROJECT
+              </label>
               <input
                 type="text"
                 value={projectName}
                 onChange={(e) => setProjectName(e.target.value)}
-                className="w-full bg-[#0a0a0c] border border-gray-800 rounded-xl px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-indigo-500"
+                className="w-full bg-[#FFFFFF] border-2 border-[#0A0A0A] rounded-xl px-3 py-2 text-xs font-mono text-[#0A0A0A] sticker-shadow-sm focus:outline-none"
               />
             </div>
           </div>
@@ -102,14 +114,14 @@ export function AIReviewModal({ initialResult, mode, onClose, onApprove }: AIRev
           {/* Action Items List */}
           <div>
             <div className="flex items-center justify-between mb-3">
-              <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">
-                Extracted Tasks ({selectedCount} Selected)
+              <span className="font-label text-[11px] text-[#0A0A0A] font-bold tracking-wider">
+                EXTRACTED TASKS ({selectedCount} SELECTED)
               </span>
               <button
                 onClick={addNewTask}
-                className="text-xs font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1"
+                className="font-label text-xs font-bold text-[#0A0A0A] hover:underline flex items-center gap-1 cursor-pointer"
               >
-                <Plus className="w-3.5 h-3.5" /> Add Task
+                <Plus className="w-3.5 h-3.5" /> + ADD TASK
               </button>
             </div>
 
@@ -117,17 +129,17 @@ export function AIReviewModal({ initialResult, mode, onClose, onApprove }: AIRev
               {tasks.map((task) => (
                 <div
                   key={task.id}
-                  className={`p-3.5 rounded-xl border transition-all flex items-start gap-3 ${
+                  className={`p-3.5 rounded-xl border-2 border-[#0A0A0A] transition-all flex items-start gap-3 ${
                     task.selected
-                      ? "bg-[#18181c] border-gray-700/80 shadow-sm"
-                      : "bg-[#0d0d10] border-gray-900 opacity-60"
+                      ? "bg-[#FFFFFF] sticker-shadow-sm"
+                      : "bg-[#DEDEC8] opacity-50"
                   }`}
                 >
                   <input
                     type="checkbox"
                     checked={task.selected}
                     onChange={() => toggleTask(task.id)}
-                    className="mt-1 w-4 h-4 rounded border-gray-700 text-indigo-600 focus:ring-0 cursor-pointer"
+                    className="mt-1 w-4 h-4 accent-[#0A0A0A] cursor-pointer"
                   />
                   
                   <div className="flex-1 space-y-2">
@@ -135,25 +147,24 @@ export function AIReviewModal({ initialResult, mode, onClose, onApprove }: AIRev
                       type="text"
                       value={task.title}
                       onChange={(e) => updateTitle(task.id, e.target.value)}
-                      className="w-full bg-transparent text-sm font-medium text-white focus:outline-none border-b border-transparent focus:border-indigo-500"
+                      className="w-full bg-transparent text-xs font-bold text-[#0A0A0A] focus:outline-none border-b border-dashed border-[#0A0A0A]"
                     />
 
                     <div className="flex items-center gap-3 text-xs">
-                      {/* Priority selector */}
                       <select
                         value={task.priority}
                         onChange={(e) => updatePriority(task.id, e.target.value as Priority)}
-                        className="bg-[#0f0f13] border border-gray-800 rounded-lg px-2 py-1 text-gray-300 text-xs focus:outline-none"
+                        className="bg-[#DEDEC8] border border-[#0A0A0A] rounded-md px-2 py-0.5 font-label text-[10px] text-[#0A0A0A] font-bold focus:outline-none"
                       >
-                        <option value="low">Low Priority</option>
-                        <option value="medium">Medium Priority</option>
-                        <option value="high">High Priority</option>
-                        <option value="urgent">Urgent</option>
+                        <option value="low">LOW PRIORITY</option>
+                        <option value="medium">MEDIUM PRIORITY</option>
+                        <option value="high">HIGH PRIORITY</option>
+                        <option value="urgent">URGENT</option>
                       </select>
 
                       {task.dueDate && (
-                        <span className="flex items-center gap-1 text-gray-400">
-                          <Calendar className="w-3 h-3 text-gray-500" />
+                        <span className="flex items-center gap-1 font-mono text-[10px] text-[#555555]">
+                          <Calendar className="w-3 h-3 text-[#0A0A0A]" />
                           {task.dueDate}
                         </span>
                       )}
@@ -162,7 +173,7 @@ export function AIReviewModal({ initialResult, mode, onClose, onApprove }: AIRev
 
                   <button
                     onClick={() => removeTask(task.id)}
-                    className="text-gray-500 hover:text-rose-400 p-1 transition-colors"
+                    className="text-[#555555] hover:text-[#0A0A0A] p-1 transition-colors cursor-pointer"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -173,21 +184,21 @@ export function AIReviewModal({ initialResult, mode, onClose, onApprove }: AIRev
         </div>
 
         {/* Modal Footer */}
-        <div className="p-4 border-t border-gray-800 bg-[#0c0c0e] flex items-center justify-between">
+        <div className="p-4 border-t-2 border-[#0A0A0A] bg-[#DEDEC8] flex items-center justify-between">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-sm font-semibold text-gray-400 hover:text-white transition-colors"
+            className="px-4 py-2 font-label text-xs font-bold text-[#555555] hover:text-[#0A0A0A] transition-colors cursor-pointer"
           >
-            Cancel
+            DISCARD
           </button>
 
           <button
             onClick={handleApprove}
             disabled={selectedCount === 0}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition-all cursor-pointer"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0A0A0A] text-[#FFFFFF] font-label text-xs font-bold sticker-shadow-lift cursor-pointer disabled:opacity-40"
           >
             <CheckCircle2 className="w-4 h-4" />
-            Approve & Create {selectedCount} Task{selectedCount === 1 ? "" : "s"}
+            <span>APPROVE & COMMIT ({selectedCount})</span>
           </button>
         </div>
       </div>

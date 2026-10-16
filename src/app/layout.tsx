@@ -1,21 +1,34 @@
 import type { Metadata } from "next";
+import { Rubik_Mono_One, Oswald, Inter } from "next/font/google";
 import "./globals.css";
 
+const rubikMonoOne = Rubik_Mono_One({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-retro-display",
+  display: "swap",
+});
+
+const oswald = Oswald({
+  subsets: ["latin"],
+  variable: "--font-retro-label",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Collectly - Automated Payment Chasing for Agencies",
-  description: "Stop chasing unpaid invoices. Collectly automates your AR so you can focus on creative work.",
+  title: "Collectly — AI Workspace (Retro Space Zine Edition)",
+  description: "Turn scattered information into organized work and actionable results with AI.",
   openGraph: {
-    title: "Collectly",
-    description: "Automated payment chasing for creative agencies.",
+    title: "Collectly — AI Workspace",
+    description: "Turn scattered information into organized work and actionable results with AI.",
     url: "https://collectly.app",
     siteName: "Collectly",
-    images: [
-      {
-        url: "https://collectly.app/og-image.jpg",
-        width: 1200,
-        height: 630,
-      }
-    ],
     locale: "en_US",
     type: "website",
   }
@@ -27,8 +40,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased min-h-screen bg-slate-50 text-slate-900">
+    <html lang="en" className={`${rubikMonoOne.variable} ${oswald.variable} ${inter.variable}`}>
+      <body className="antialiased min-h-screen bg-[#DEDEC8] text-[#0A0A0A] font-sans selection:bg-[#0A0A0A] selection:text-[#FFFFFF]">
         {children}
       </body>
     </html>

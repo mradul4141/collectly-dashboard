@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle2, Circle, Plus, Search, Calendar, Flag, FolderKanban, Sparkles, Filter } from "lucide-react";
+import { CheckCircle2, Circle, Plus, Search, Calendar, FolderKanban, Sparkles, Filter } from "lucide-react";
 import { Task, Priority } from "@/lib/workspace-types";
+import { PlanetIllustration } from "@/components/illustrations/retro-space";
 
 export default function MyTasksPage() {
   const [tasks, setTasks] = useState<Task[]>([
@@ -95,22 +96,29 @@ export default function MyTasksPage() {
   const completedCount = tasks.filter(t => t.is_completed).length;
 
   return (
-    <div className="max-w-[1200px] mx-auto space-y-6 animate-fade-in p-2">
+    <div className="max-w-[1200px] mx-auto space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-800 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-[#0A0A0A] pb-5">
         <div>
-          <h1 className="text-3xl font-serif font-bold text-white tracking-tight">My Tasks</h1>
-          <p className="text-sm text-gray-400 mt-1">
-            Organize, prioritize, and check off your day-to-day work.
+          <div className="flex items-center gap-2 mb-1">
+            <span className="font-label text-[10px] bg-[#0A0A0A] text-[#FFFFFF] px-2 py-0.5 rounded font-bold tracking-widest">
+              MISSION CHECKLIST
+            </span>
+          </div>
+          <h1 className="font-display text-2xl md:text-3xl text-[#0A0A0A] tracking-wider uppercase mt-1">
+            MY TASKS & RUNTIME QUEUE
+          </h1>
+          <p className="font-label text-xs text-[#555555] tracking-wider mt-1">
+            MANAGE, EXECUTE, AND CHECK OFF ORBITAL DELIVERABLES
           </p>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-xs bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-3 py-1.5 rounded-xl font-bold">
-            {pendingCount} Pending
+          <span className="font-label text-xs bg-[#FFFFFF] border-2 border-[#0A0A0A] text-[#0A0A0A] px-3 py-1.5 rounded-xl font-bold sticker-shadow-sm">
+            {pendingCount} PENDING
           </span>
-          <span className="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1.5 rounded-xl font-bold">
-            {completedCount} Completed
+          <span className="font-label text-xs bg-[#0A0A0A] text-[#FFFFFF] px-3 py-1.5 rounded-xl font-bold sticker-shadow-sm">
+            {completedCount} FINISHED
           </span>
         </div>
       </div>
@@ -121,65 +129,65 @@ export default function MyTasksPage() {
           type="text"
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
-          placeholder="+ Add a quick task and press Enter..."
-          className="flex-1 bg-[#111114] border border-gray-800 rounded-xl px-4 py-3 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:border-indigo-500"
+          placeholder="+ LOG NEW TASK AND PRESS ENTER..."
+          className="flex-1 bg-[#FFFFFF] border-2 border-[#0A0A0A] rounded-xl px-4 py-3 font-mono text-xs text-[#0A0A0A] placeholder-[#888888] focus:outline-none sticker-shadow-sm focus:shadow-[4px_4px_0px_#0A0A0A]"
         />
         <button
           type="submit"
-          className="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-5 py-3 rounded-xl text-sm transition-colors flex items-center gap-1.5"
+          className="bg-[#0A0A0A] text-[#FFFFFF] font-label font-bold px-5 py-3 rounded-xl text-xs sticker-shadow-lift flex items-center gap-1.5 cursor-pointer"
         >
-          <Plus className="w-4 h-4" /> Add Task
+          <Plus className="w-4 h-4" /> <span>CREATE</span>
         </button>
       </form>
 
       {/* Controls / Filter Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-[#111114] p-3 rounded-xl border border-gray-800">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-[#FFFFFF] p-3 rounded-2xl border-2 border-[#0A0A0A] sticker-shadow-sm">
         <div className="relative w-full sm:w-72">
-          <Search className="w-4 h-4 absolute left-3 top-2.5 text-gray-500" />
+          <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-[#0A0A0A]" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search tasks or projects..."
-            className="w-full bg-[#0a0a0c] border border-gray-800 rounded-lg pl-9 pr-3 py-1.5 text-xs text-gray-200 placeholder-gray-500 focus:outline-none focus:border-indigo-500"
+            placeholder="FILTER TASKS / PROJECTS..."
+            className="w-full bg-[#F4F4F0] border border-[#0A0A0A] rounded-lg pl-9 pr-3 py-1.5 font-mono text-[11px] text-[#0A0A0A] placeholder-[#888888] focus:outline-none"
           />
         </div>
 
         <div className="flex items-center gap-2 w-full sm:w-auto">
-          <Filter className="w-3.5 h-3.5 text-gray-400" />
+          <Filter className="w-3.5 h-3.5 text-[#0A0A0A]" />
           <select
             value={filterPriority}
             onChange={(e) => setFilterPriority(e.target.value)}
-            className="bg-[#0a0a0c] border border-gray-800 rounded-lg px-2.5 py-1.5 text-xs text-gray-300 focus:outline-none"
+            className="bg-[#F4F4F0] border border-[#0A0A0A] rounded-lg px-2.5 py-1.5 font-label text-[10px] font-bold text-[#0A0A0A] focus:outline-none"
           >
-            <option value="all">All Priorities</option>
-            <option value="urgent">Urgent</option>
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
+            <option value="all">ALL PRIORITIES</option>
+            <option value="urgent">URGENT</option>
+            <option value="high">HIGH</option>
+            <option value="medium">MEDIUM</option>
+            <option value="low">LOW</option>
           </select>
         </div>
       </div>
 
       {/* Tasks List */}
-      <div className="space-y-2">
+      <div className="space-y-2.5">
         {filteredTasks.map((task) => (
           <div
             key={task.id}
             onClick={() => toggleTask(task.id)}
-            className={`p-4 rounded-xl border transition-all flex items-center justify-between gap-4 cursor-pointer ${
+            className={`p-4 rounded-2xl border-2 border-[#0A0A0A] transition-all flex items-center justify-between gap-4 cursor-pointer ${
               task.is_completed
-                ? "bg-[#0c0c0e]/60 border-gray-900 opacity-50"
-                : "bg-[#111114] hover:bg-[#151518] border-gray-800 hover:border-gray-700"
+                ? "bg-[#DEDEC8]/60 opacity-60"
+                : "bg-[#FFFFFF] sticker-shadow-sm hover:translate-x-0.5 hover:translate-y-0.5"
             }`}
           >
             <div className="flex items-center gap-3.5 flex-1">
               <button
                 type="button"
-                className="text-gray-400 hover:text-indigo-400 transition-colors"
+                className="text-[#0A0A0A] transition-colors cursor-pointer"
               >
                 {task.is_completed ? (
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                  <CheckCircle2 className="w-5 h-5 text-[#0A0A0A]" />
                 ) : (
                   <Circle className="w-5 h-5" />
                 )}
@@ -187,25 +195,25 @@ export default function MyTasksPage() {
 
               <div className="space-y-0.5">
                 <span
-                  className={`text-sm font-medium ${
-                    task.is_completed ? "line-through text-gray-500" : "text-gray-200"
+                  className={`text-xs font-bold ${
+                    task.is_completed ? "line-through text-[#666666]" : "text-[#0A0A0A]"
                   }`}
                 >
                   {task.title}
                 </span>
 
-                <div className="flex items-center gap-2 text-xs text-gray-500">
-                  <span className="flex items-center gap-1 text-gray-400">
-                    <FolderKanban className="w-3 h-3 text-indigo-400" />
-                    {task.project_name || "General"}
+                <div className="flex items-center gap-2 font-label text-[10px] text-[#666666]">
+                  <span className="flex items-center gap-1 text-[#0A0A0A] font-bold">
+                    <FolderKanban className="w-3 h-3 text-[#0A0A0A]" />
+                    {task.project_name || "GENERAL"}
                   </span>
                   {task.due_date && (
-                    <span className="flex items-center gap-1 text-gray-500">
+                    <span className="flex items-center gap-1 font-mono text-[#666666]">
                       • <Calendar className="w-3 h-3" /> {task.due_date}
                     </span>
                   )}
                   {task.ai_generated && (
-                    <span className="text-[10px] text-indigo-400 bg-indigo-500/10 px-1.5 py-0.2 rounded border border-indigo-500/20 font-bold flex items-center gap-0.5">
+                    <span className="font-label text-[9px] bg-[#DEDEC8] border border-[#0A0A0A] text-[#0A0A0A] px-1.5 py-0.2 rounded font-bold flex items-center gap-0.5">
                       <Sparkles className="w-2.5 h-2.5" /> AI
                     </span>
                   )}
@@ -213,16 +221,8 @@ export default function MyTasksPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <span
-                className={`text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider ${
-                  task.priority === "urgent"
-                    ? "bg-rose-500/20 text-rose-400 border border-rose-500/30"
-                    : task.priority === "high"
-                    ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
-                    : "bg-blue-500/20 text-blue-400 border border-blue-500/30"
-                }`}
-              >
+            <div>
+              <span className="font-label text-[9px] bg-[#0A0A0A] text-[#FFFFFF] px-2.5 py-1 rounded font-bold uppercase tracking-wider">
                 {task.priority}
               </span>
             </div>
@@ -230,8 +230,8 @@ export default function MyTasksPage() {
         ))}
 
         {filteredTasks.length === 0 && (
-          <div className="text-center py-12 bg-[#111114] border border-gray-800 rounded-xl text-gray-400 text-sm">
-            No tasks found. Use the quick-add input above or capture tasks with AI!
+          <div className="text-center py-12 bg-[#FFFFFF] border-2 border-[#0A0A0A] rounded-2xl font-mono text-xs text-[#555555] sticker-shadow-sm">
+            NO LOGGED ITEMS FOUND. ADD A TASK ABOVE OR DECODE TRANSMISSIONS IN AI CAPTURE.
           </div>
         )}
       </div>

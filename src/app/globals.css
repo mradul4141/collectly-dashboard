@@ -1,27 +1,90 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-retro-display: var(--font-retro-display), monospace;
+  --font-retro-label: var(--font-retro-label), sans-serif;
 }
 
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
+  --bg-page: #dedec8;
+  --bg-surface: #ffffff;
+  --ink-primary: #0a0a0a;
+  --ink-muted: #555555;
+  --shadow-offset: 4px 4px 0px #0a0a0a;
+  --shadow-offset-lg: 6px 6px 0px #0a0a0a;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
+  background-color: var(--bg-page);
+  color: var(--ink-primary);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
-/* Solid Dashboard utilities */
-.glass {
-  @apply bg-[#000000] border-r border-[#1a1a1a];
+/* Retro Space Zine Utilities */
+.font-display {
+  font-family: var(--font-retro-display);
 }
 
-.glass-card {
-  @apply bg-[#0a0a0a] rounded-[24px] border border-[#1a1a1a] shadow-xl;
+.font-label {
+  font-family: var(--font-retro-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* 3D Offset Sticker Shadows */
+.sticker-shadow-sm {
+  box-shadow: 2px 2px 0px #0a0a0a;
+}
+
+.sticker-shadow {
+  box-shadow: 4px 4px 0px #0a0a0a;
+}
+
+.sticker-shadow-lg {
+  box-shadow: 6px 6px 0px #0a0a0a;
+}
+
+.sticker-shadow-lift {
+  box-shadow: 4px 4px 0px #0a0a0a;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sticker-shadow-lift:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #0a0a0a;
+}
+
+.sticker-shadow-lift:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #0a0a0a;
+}
+
+/* Zine Card Style */
+.zine-card {
+  background-color: #ffffff;
+  border: 2px solid #0a0a0a;
+  border-radius: 20px;
+  box-shadow: var(--shadow-offset);
+}
+
+/* Retro Input Style */
+.zine-input {
+  background-color: transparent;
+  border: 2px solid #0a0a0a;
+  border-radius: 12px;
+  color: #0a0a0a;
+  outline: none;
+  transition: box-shadow 0.15s ease;
+}
+
+.zine-input:focus {
+  box-shadow: 3px 3px 0px #0a0a0a;
+}
+
+/* Halftone dot pattern background utility */
+.halftone-dots {
+  background-image: radial-gradient(#0a0a0a 1px, transparent 1px);
+  background-size: 14px 14px;
 }

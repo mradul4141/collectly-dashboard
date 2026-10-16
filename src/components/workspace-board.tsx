@@ -4,29 +4,25 @@ import { useState } from "react";
 import { 
   FolderKanban, 
   Plus, 
-  CheckCircle2, 
-  Circle, 
-  Clock, 
   Calendar, 
   Sparkles, 
-  MoreHorizontal, 
   Search,
-  Filter
 } from "lucide-react";
 import { Project, Task, Priority, TaskStatus } from "@/lib/workspace-types";
+import { PlanetIllustration } from "@/components/illustrations/retro-space";
 
 export function WorkspaceBoard() {
   const [activeTab, setActiveTab] = useState<"projects" | "kanban">("projects");
   const [search, setSearch] = useState("");
 
-  const [projects, setProjects] = useState<Project[]>([
+  const [projects] = useState<Project[]>([
     {
       id: "proj-1",
       user_id: "demo",
       title: "Client Deliverables & Proposals",
       description: "Q4 client revamps, milestone delivery specs, and proposals.",
       status: "in_progress",
-      color: "#6366f1",
+      color: "#0A0A0A",
       due_date: "2026-10-31",
       task_count: 5,
       completed_count: 3,
@@ -38,7 +34,7 @@ export function WorkspaceBoard() {
       title: "Product Launch & Marketing",
       description: "Landing page video, YouTube walkthroughs, and distribution.",
       status: "in_progress",
-      color: "#f59e0b",
+      color: "#0A0A0A",
       due_date: "2026-11-15",
       task_count: 6,
       completed_count: 2,
@@ -50,7 +46,7 @@ export function WorkspaceBoard() {
       title: "Operations & Compliance",
       description: "Tax audit, MSME Section 43B compliance, and accounting review.",
       status: "completed",
-      color: "#10b981",
+      color: "#0A0A0A",
       due_date: "2026-10-20",
       task_count: 4,
       completed_count: 4,
@@ -113,11 +109,11 @@ export function WorkspaceBoard() {
     }
   ]);
 
-  const columns: { id: TaskStatus; label: string; color: string }[] = [
-    { id: "todo", label: "To Do", color: "bg-blue-500/10 text-blue-400 border-blue-500/20" },
-    { id: "in_progress", label: "In Progress", color: "bg-amber-500/10 text-amber-400 border-amber-500/20" },
-    { id: "review", label: "Review & Approval", color: "bg-purple-500/10 text-purple-400 border-purple-500/20" },
-    { id: "done", label: "Completed", color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" }
+  const columns: { id: TaskStatus; label: string }[] = [
+    { id: "todo", label: "TO DO" },
+    { id: "in_progress", label: "IN PROGRESS" },
+    { id: "review", label: "REVIEW & STAGING" },
+    { id: "done", label: "COMPLETED" }
   ];
 
   const moveTask = (taskId: string, newStatus: TaskStatus) => {
@@ -134,40 +130,40 @@ export function WorkspaceBoard() {
   );
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6">
       {/* Top Switcher Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#111114] p-3 rounded-2xl border border-gray-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#FFFFFF] p-3 rounded-2xl border-2 border-[#0A0A0A] sticker-shadow-sm">
         <div className="flex items-center gap-2">
           <button
             onClick={() => setActiveTab("projects")}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            className={`px-4 py-2 rounded-xl font-label text-xs font-bold transition-all cursor-pointer ${
               activeTab === "projects"
-                ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30"
-                : "text-gray-400 hover:text-white hover:bg-gray-900"
+                ? "bg-[#0A0A0A] text-[#FFFFFF] sticker-shadow-lift"
+                : "text-[#555555] hover:text-[#0A0A0A] hover:bg-[#F4F4F0]"
             }`}
           >
-            Projects Overview ({projects.length})
+            PROJECTS OVERVIEW ({projects.length})
           </button>
           <button
             onClick={() => setActiveTab("kanban")}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            className={`px-4 py-2 rounded-xl font-label text-xs font-bold transition-all cursor-pointer ${
               activeTab === "kanban"
-                ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30"
-                : "text-gray-400 hover:text-white hover:bg-gray-900"
+                ? "bg-[#0A0A0A] text-[#FFFFFF] sticker-shadow-lift"
+                : "text-[#555555] hover:text-[#0A0A0A] hover:bg-[#F4F4F0]"
             }`}
           >
-            Kanban Board ({tasks.length} Tasks)
+            KANBAN BOARD ({tasks.length} TASKS)
           </button>
         </div>
 
         <div className="relative w-full sm:w-64">
-          <Search className="w-4 h-4 absolute left-3 top-2.5 text-gray-500" />
+          <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-[#0A0A0A]" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search projects or tasks..."
-            className="w-full bg-[#0a0a0c] border border-gray-800 rounded-xl pl-9 pr-3 py-1.5 text-xs text-gray-200 placeholder-gray-500 focus:outline-none focus:border-indigo-500"
+            placeholder="SEARCH MISSIONS..."
+            className="w-full bg-[#F4F4F0] border border-[#0A0A0A] rounded-xl pl-9 pr-3 py-1.5 font-mono text-[11px] text-[#0A0A0A] placeholder-[#888888] focus:outline-none"
           />
         </div>
       </div>
@@ -180,41 +176,38 @@ export function WorkspaceBoard() {
             return (
               <div
                 key={proj.id}
-                className="bg-[#111114] border border-gray-800 hover:border-gray-700/80 rounded-2xl p-5 transition-all flex flex-col justify-between shadow-lg"
+                className="bg-[#FFFFFF] border-2 border-[#0A0A0A] rounded-[22px] p-5 flex flex-col justify-between shadow-[6px_6px_0px_#0A0A0A] hover:translate-x-0.5 hover:translate-y-0.5 transition-transform"
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span 
-                      className="w-3 h-3 rounded-full" 
-                      style={{ backgroundColor: proj.color || "#6366f1" }} 
-                    />
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 bg-gray-900 px-2 py-0.5 rounded-full border border-gray-800">
+                    <span className="w-3.5 h-3.5 rounded-full bg-[#0A0A0A]" />
+                    <span className="font-label text-[9px] bg-[#DEDEC8] border border-[#0A0A0A] text-[#0A0A0A] px-2 py-0.5 rounded font-bold uppercase tracking-wider">
                       {proj.status.replace("_", " ")}
                     </span>
                   </div>
 
-                  <h3 className="text-base font-bold text-white mb-1.5 tracking-tight">{proj.title}</h3>
-                  <p className="text-xs text-gray-400 leading-relaxed mb-4">{proj.description}</p>
+                  <h3 className="font-display text-sm text-[#0A0A0A] mb-1.5 tracking-wider uppercase">{proj.title}</h3>
+                  <p className="font-sans text-xs text-[#555555] leading-relaxed mb-4">{proj.description}</p>
                 </div>
 
-                <div className="pt-4 border-t border-gray-800/80 space-y-3">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-gray-400 font-medium">Progress</span>
-                    <span className="text-gray-200 font-bold">{pct}%</span>
+                <div className="pt-4 border-t-2 border-[#0A0A0A]/10 space-y-3">
+                  <div className="flex items-center justify-between font-label text-xs">
+                    <span className="text-[#555555] font-bold">COMPLETION:</span>
+                    <span className="font-mono text-[#0A0A0A] font-bold">{pct}%</span>
                   </div>
 
-                  {/* Progress Bar */}
-                  <div className="w-full h-1.5 bg-gray-800 rounded-full overflow-hidden">
+                  {/* Retro Progress Bar with Engraved Border */}
+                  <div className="w-full h-2.5 bg-[#DEDEC8] border border-[#0A0A0A] rounded-full overflow-hidden">
                     <div 
-                      className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full transition-all duration-500" 
+                      className="h-full bg-[#0A0A0A] rounded-full transition-all duration-500" 
                       style={{ width: `${pct}%` }}
                     />
                   </div>
 
-                  <div className="flex items-center justify-between text-[11px] text-gray-500 pt-1">
-                    <span>{proj.completed_count}/{proj.task_count} Tasks Done</span>
+                  <div className="flex items-center justify-between font-mono text-[10px] text-[#555555] pt-1">
+                    <span>{proj.completed_count}/{proj.task_count} TASKS DONE</span>
                     {proj.due_date && (
-                      <span className="flex items-center gap-1 text-gray-400">
+                      <span className="flex items-center gap-1 text-[#0A0A0A] font-bold">
                         <Calendar className="w-3 h-3" />
                         {proj.due_date}
                       </span>
@@ -235,13 +228,13 @@ export function WorkspaceBoard() {
             return (
               <div
                 key={col.id}
-                className="bg-[#0f0f13] border border-gray-800/80 rounded-2xl p-4 flex flex-col min-h-[500px]"
+                className="bg-[#FFFFFF] border-2 border-[#0A0A0A] rounded-[22px] p-4 flex flex-col min-h-[500px] shadow-[4px_4px_0px_#0A0A0A]"
               >
                 {/* Column Header */}
-                <div className="flex items-center justify-between pb-3 mb-3 border-b border-gray-800/60">
+                <div className="flex items-center justify-between pb-3 mb-3 border-b-2 border-[#0A0A0A]">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-white tracking-tight">{col.label}</span>
-                    <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full border ${col.color}`}>
+                    <span className="font-display text-xs text-[#0A0A0A] tracking-wider">{col.label}</span>
+                    <span className="font-mono text-[10px] bg-[#0A0A0A] text-[#FFFFFF] px-1.5 py-0.2 rounded font-bold">
                       {colTasks.length}
                     </span>
                   </div>
@@ -252,45 +245,37 @@ export function WorkspaceBoard() {
                   {colTasks.map((task) => (
                     <div
                       key={task.id}
-                      className="bg-[#16161b] border border-gray-800 hover:border-gray-700/80 rounded-xl p-3.5 space-y-2.5 transition-all shadow-sm"
+                      className="bg-[#F4F4F0] border-2 border-[#0A0A0A] rounded-xl p-3.5 space-y-2.5 shadow-sm hover:translate-x-0.5 hover:translate-y-0.5 transition-transform"
                     >
                       <div className="flex items-start justify-between gap-2">
-                        <span className="text-xs font-semibold text-gray-200 leading-snug">{task.title}</span>
-                        <span
-                          className={`text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider flex-shrink-0 ${
-                            task.priority === "urgent"
-                              ? "bg-rose-500/20 text-rose-400 border border-rose-500/30"
-                              : task.priority === "high"
-                              ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
-                              : "bg-blue-500/20 text-blue-400 border border-blue-500/30"
-                          }`}
-                        >
+                        <span className="font-bold text-xs text-[#0A0A0A] leading-snug">{task.title}</span>
+                        <span className="font-label text-[9px] bg-[#0A0A0A] text-[#FFFFFF] px-1.5 py-0.5 rounded uppercase tracking-wider flex-shrink-0 font-bold">
                           {task.priority}
                         </span>
                       </div>
 
-                      <div className="flex items-center justify-between text-[11px] text-gray-500 pt-1 border-t border-gray-800/50">
-                        <span className="text-gray-400 font-medium">{task.project_name || "General"}</span>
+                      <div className="flex items-center justify-between font-label text-[10px] text-[#555555] pt-1 border-t border-[#0A0A0A]/20">
+                        <span className="text-[#0A0A0A] font-bold">{task.project_name || "GENERAL"}</span>
 
                         {task.ai_generated && (
-                          <span className="text-[9px] text-indigo-400 bg-indigo-500/10 px-1 py-0.5 rounded border border-indigo-500/20 font-bold flex items-center gap-0.5">
+                          <span className="font-label text-[9px] bg-[#DEDEC8] border border-[#0A0A0A] text-[#0A0A0A] px-1 py-0.2 rounded font-bold flex items-center gap-0.5">
                             <Sparkles className="w-2.5 h-2.5" /> AI
                           </span>
                         )}
                       </div>
 
-                      {/* Quick Move Dropdown */}
-                      <div className="pt-1 flex items-center justify-between text-[10px] text-gray-500">
-                        <span>Move:</span>
+                      {/* Quick Move Buttons */}
+                      <div className="pt-1 flex items-center justify-between font-label text-[10px] text-[#555555]">
+                        <span>SHIFT:</span>
                         <div className="flex gap-1">
                           {columns.filter(c => c.id !== col.id).map(targetCol => (
                             <button
                               key={targetCol.id}
                               onClick={() => moveTask(task.id, targetCol.id)}
-                              className="px-1.5 py-0.5 bg-gray-900 hover:bg-gray-800 text-gray-300 rounded border border-gray-800 transition-colors"
+                              className="px-1.5 py-0.5 bg-[#FFFFFF] hover:bg-[#0A0A0A] hover:text-[#FFFFFF] text-[#0A0A0A] font-bold rounded border border-[#0A0A0A] transition-colors cursor-pointer"
                               title={`Move to ${targetCol.label}`}
                             >
-                              {targetCol.label.slice(0, 4)}
+                              {targetCol.label.slice(0, 3)}
                             </button>
                           ))}
                         </div>
@@ -299,8 +284,8 @@ export function WorkspaceBoard() {
                   ))}
 
                   {colTasks.length === 0 && (
-                    <div className="text-center py-10 text-gray-600 text-xs border border-dashed border-gray-800/60 rounded-xl">
-                      Empty
+                    <div className="text-center py-10 font-mono text-[#888888] text-xs border-2 border-dashed border-[#0A0A0A]/20 rounded-xl">
+                      // STAGE CLEAR
                     </div>
                   )}
                 </div>

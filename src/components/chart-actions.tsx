@@ -6,129 +6,146 @@ import { motion } from "framer-motion";
 
 export function ChartAndActions() {
   const data = [30, 45, 80, 50, 40, 20, 95, 70, 85, 40, 30, 75];
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
   const container = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { staggerChildren: 0.05, delayChildren: 0.3 }
+      transition: { staggerChildren: 0.05, delayChildren: 0.2 }
     }
   };
 
   const item = {
-    hidden: { opacity: 0, scale: 0.95 },
-    show: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 300, damping: 24 } as any }
+    hidden: { opacity: 0, scale: 0.96 },
+    show: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 350, damping: 24 } as any }
   };
 
+  const quickActions = [
+    {
+      title: "DISPATCH INVOICE",
+      sub: "Stripe & Escrow Links",
+      icon: FileText,
+      href: "/dashboard/invoices"
+    },
+    {
+      title: "TRANSMIT PROPOSAL",
+      sub: "Auto-Cadence Cadence",
+      icon: Send,
+    },
+    {
+      title: "ISSUE CONTRACT",
+      sub: "Milestone Orbital Terms",
+      icon: ClipboardList,
+    },
+    {
+      title: "INGEST PAYLOAD",
+      sub: "Import CSV / Registry",
+      icon: FolderPlus,
+    },
+    {
+      title: "INITIATE MISSION",
+      sub: "Retainer Deliverables",
+      icon: UploadCloud,
+    },
+    {
+      title: "AUDIT TAX LEDGER",
+      sub: "Sec 43B 45-Day Countdown",
+      icon: Calculator,
+    },
+  ];
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 h-[320px] mt-5">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-2">
       {/* Earnings Over Time Chart */}
       <motion.div 
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2, duration: 0.5 }}
-        className="glass-card rounded-[24px] p-6 flex flex-col justify-between"
+        transition={{ delay: 0.15, duration: 0.4 }}
+        className="bg-white border-2 border-[#0A0A0A] rounded-[24px] p-6 shadow-[5px_5px_0px_#0A0A0A] flex flex-col justify-between"
       >
         <div className="flex justify-between items-start mb-6">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <h3 className="font-serif font-bold text-lg text-white tracking-tight">Earning over time</h3>
-              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-500 border border-orange-500/20">Peak: Feb ($24.8k)</span>
+              <h3 className="font-display text-sm tracking-wide text-[#0A0A0A] uppercase">
+                REVENUE DISPATCH
+              </h3>
+              <span className="font-label text-[9px] font-bold px-2 py-0.5 rounded-full bg-[#0A0A0A] text-white border border-[#0A0A0A] tracking-wider uppercase">
+                PEAK: FEB ($24.8K)
+              </span>
             </div>
             <div className="flex items-center gap-4 mt-2">
-              <div className="flex items-center gap-1.5 text-[10px] text-gray-400 font-bold">
-                <span className="w-2 h-2 rounded-full bg-white"></span> Billable Work
+              <div className="flex items-center gap-1.5 font-label text-[10px] text-[#0A0A0A] font-bold tracking-wider uppercase">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#0A0A0A]"></span> FLIGHT WORK
               </div>
-              <div className="flex items-center gap-1.5 text-[10px] text-gray-400 font-bold">
-                <span className="w-2 h-2 rounded-full bg-orange-500"></span> Auto-Recovered AR
+              <div className="flex items-center gap-1.5 font-label text-[10px] text-[#0A0A0A]/70 font-bold tracking-wider uppercase">
+                <span className="w-2.5 h-2.5 rounded-full border border-[#0A0A0A] bg-[#DEDEC8]"></span> AUTO-RECOVERED
               </div>
             </div>
           </div>
           
-          <select className="text-[11px] font-bold text-gray-400 bg-[#111] border border-[#222] rounded-md px-2 py-1 outline-none appearance-none cursor-pointer hover:bg-[#1a1a1a] transition-colors">
-            <option>Month (2026)</option>
+          <select className="font-label text-[11px] font-bold text-[#0A0A0A] bg-[#DEDEC8] border-2 border-[#0A0A0A] rounded-full px-3 py-1 outline-none shadow-[2px_2px_0px_#0A0A0A] cursor-pointer">
+            <option>CYCLE 2026 // LUNAR</option>
           </select>
         </div>
         
-        <div className="flex-1 flex items-end justify-between gap-3 h-full">
+        {/* Vintage Bar Chart */}
+        <div className="flex-1 flex items-end justify-between gap-2 h-44 pt-4 border-b-2 border-[#0A0A0A]">
           {data.map((pct, i) => (
             <div key={i} className="relative group w-full flex flex-col justify-end h-full">
               <motion.div 
                 initial={{ height: 0 }}
                 animate={{ height: `${pct}%` }}
-                transition={{ delay: 0.5 + (i * 0.05), duration: 0.8, type: "spring", bounce: 0.2 }}
-                className="w-full bg-gradient-to-t from-orange-500/20 to-orange-500/80 rounded-t-md transition-all hover:brightness-110 shadow-sm" 
-              ></motion.div>
-              <div className="text-[9px] text-gray-500 text-center mt-2 font-bold">{months[i]}</div>
+                transition={{ delay: 0.3 + (i * 0.04), duration: 0.6, type: "spring", bounce: 0.2 }}
+                className={`w-full rounded-t-sm border-t-2 border-x-2 border-[#0A0A0A] transition-all hover:brightness-90 ${
+                  i === 1 || i === 6 ? "bg-[#0A0A0A]" : "bg-[#0A0A0A]/85 hover:bg-[#0A0A0A]"
+                }`}
+              >
+                {/* Vintage hatch lines on higher bars */}
+                {pct > 50 && (
+                  <div className="w-full h-2 border-b border-white/20"></div>
+                )}
+              </motion.div>
+              <div className="font-label text-[9px] text-[#0A0A0A] text-center mt-2 font-bold tracking-wider">{months[i]}</div>
             </div>
           ))}
         </div>
       </motion.div>
 
       {/* Quick Actions (2x3 Grid) */}
-      <motion.div variants={container} initial="hidden" animate="show" className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-        <motion.div variants={item} whileHover={{ y: -4, scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-          <Link href="/dashboard/invoices" className="glass-card rounded-[20px] p-4 flex flex-col items-start justify-center gap-2 group h-full">
-            <div className="p-2 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-500 mb-1 group-hover:scale-110 transition-transform shadow-sm">
-              <FileText className="w-4 h-4" />
+      <motion.div variants={container} initial="hidden" animate="show" className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+        {quickActions.map((qa, idx) => {
+          const Icon = qa.icon;
+          const CardContent = (
+            <div className="bg-white border-2 border-[#0A0A0A] rounded-[18px] p-4 flex flex-col items-start justify-between gap-3 h-full shadow-[3px_3px_0px_#0A0A0A] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[5px_5px_0px_#0A0A0A] transition-all text-left w-full group cursor-pointer">
+              <div className="w-8 h-8 rounded-full bg-[#0A0A0A] text-white flex items-center justify-center border border-[#0A0A0A] group-hover:scale-105 transition-transform">
+                <Icon className="w-4 h-4" />
+              </div>
+              <div>
+                <span className="font-label text-[12px] font-bold text-[#0A0A0A] block tracking-wide uppercase leading-tight">
+                  {qa.title}
+                </span>
+                <span className="text-[10px] font-sans text-[#0A0A0A]/70 block mt-0.5">
+                  {qa.sub}
+                </span>
+              </div>
             </div>
-            <div>
-              <span className="text-[12px] font-bold text-white block">Send an invoice</span>
-              <span className="text-[10px] font-semibold text-gray-500">Stripe & UPI links</span>
-            </div>
-          </Link>
-        </motion.div>
-        
-        <motion.button variants={item} whileHover={{ y: -4, scale: 1.02 }} whileTap={{ scale: 0.98 }} className="glass-card rounded-[20px] p-4 flex flex-col items-start justify-center gap-2 group text-left w-full h-full">
-          <div className="p-2 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-500 mb-1 group-hover:scale-110 transition-transform shadow-sm">
-            <Send className="w-4 h-4" />
-          </div>
-          <div>
-            <span className="text-[12px] font-bold text-white block">Draft a proposal</span>
-            <span className="text-[10px] font-semibold text-gray-500">Polite auto-chasing</span>
-          </div>
-        </motion.button>
-        
-        <motion.button variants={item} whileHover={{ y: -4, scale: 1.02 }} whileTap={{ scale: 0.98 }} className="glass-card rounded-[20px] p-4 flex flex-col items-start justify-center gap-2 group text-left w-full h-full">
-          <div className="p-2 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-500 mb-1 group-hover:scale-110 transition-transform shadow-sm">
-            <ClipboardList className="w-4 h-4" />
-          </div>
-          <div>
-            <span className="text-[12px] font-bold text-white block">Create a contract</span>
-            <span className="text-[10px] font-semibold text-gray-500">Milestone terms</span>
-          </div>
-        </motion.button>
-        
-        <motion.button variants={item} whileHover={{ y: -4, scale: 1.02 }} whileTap={{ scale: 0.98 }} className="glass-card rounded-[20px] p-4 flex flex-col items-start justify-center gap-2 group text-left w-full h-full">
-          <div className="p-2 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-500 mb-1 group-hover:scale-110 transition-transform shadow-sm">
-            <FolderPlus className="w-4 h-4" />
-          </div>
-          <div>
-            <span className="text-[12px] font-bold text-white block">Add a form</span>
-            <span className="text-[10px] font-semibold text-gray-500">Import CSV / Excel</span>
-          </div>
-        </motion.button>
-        
-        <motion.button variants={item} whileHover={{ y: -4, scale: 1.02 }} whileTap={{ scale: 0.98 }} className="glass-card rounded-[20px] p-4 flex flex-col items-start justify-center gap-2 group text-left w-full h-full">
-          <div className="p-2 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-500 mb-1 group-hover:scale-110 transition-transform shadow-sm">
-            <UploadCloud className="w-4 h-4" />
-          </div>
-          <div>
-            <span className="text-[12px] font-bold text-white block">Create a project</span>
-            <span className="text-[10px] font-semibold text-gray-500">Retainer deliverables</span>
-          </div>
-        </motion.button>
-        
-        <motion.button variants={item} whileHover={{ y: -4, scale: 1.02 }} whileTap={{ scale: 0.98 }} className="glass-card rounded-[20px] p-4 flex flex-col items-start justify-center gap-2 group text-left w-full h-full">
-          <div className="p-2 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-500 mb-1 group-hover:scale-110 transition-transform shadow-sm">
-            <Calculator className="w-4 h-4" />
-          </div>
-          <div>
-            <span className="text-[12px] font-bold text-white block">File Tax</span>
-            <span className="text-[10px] font-semibold text-gray-500">Sec 43B 45-day tracking</span>
-          </div>
-        </motion.button>
+          );
+
+          return (
+            <motion.div key={idx} variants={item} whileTap={{ scale: 0.98 }}>
+              {qa.href ? (
+                <Link href={qa.href} className="block h-full">
+                  {CardContent}
+                </Link>
+              ) : (
+                <button type="button" className="block w-full h-full text-left">
+                  {CardContent}
+                </button>
+              )}
+            </motion.div>
+          );
+        })}
       </motion.div>
     </div>
   );

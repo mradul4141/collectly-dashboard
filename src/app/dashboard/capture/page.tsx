@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Sparkles, Send, FileText, CheckCircle2, ListTodo, FolderKanban, Lightbulb, Clock, ArrowRight } from "lucide-react";
+import { Sparkles, ArrowRight, CheckCircle2, FileText, ListTodo, FolderKanban, Lightbulb, Clock, Radio } from "lucide-react";
 import { AIReviewModal } from "@/components/ai-review-modal";
 import { AIExtractionResult, Task } from "@/lib/workspace-types";
+import { AstronautIllustration, UfoIllustration, StarryBlob } from "@/components/illustrations/retro-space";
 
 export default function CaptureInboxPage() {
   const [inputText, setInputText] = useState("");
@@ -76,78 +77,80 @@ export default function CaptureInboxPage() {
     setRecentTasks([...newTasks, ...recentTasks]);
     setReviewData(null);
     setInputText("");
-    setSuccessBanner(`Successfully added ${newTasks.length} approved task(s) to your workspace!`);
+    setSuccessBanner(`TRANSMISSION PROCESSED: ${newTasks.length} APPROVED TASK(S) ADDED TO WORKSPACE.`);
     setTimeout(() => setSuccessBanner(null), 5000);
   };
 
-  const handleTemplateExample = (text: string) => {
-    setInputText(text);
-  };
-
   return (
-    <div className="max-w-[1200px] mx-auto space-y-8 animate-fade-in p-2">
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-800 pb-6">
+    <div className="max-w-[1200px] mx-auto space-y-6">
+      {/* Header with floating illustrations */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-[#0A0A0A] pb-5 relative">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-indigo-400 bg-indigo-500/10 px-2.5 py-1 rounded-md border border-indigo-500/20">
-              Collectly 2.0 Engine
+            <span className="font-label text-[10px] bg-[#0A0A0A] text-[#FFFFFF] px-2 py-0.5 rounded font-bold tracking-widest">
+              COLLECTLY AI RECEIVER // FREQ 1420 MHZ
             </span>
           </div>
-          <h1 className="text-3xl font-serif font-bold text-white tracking-tight">Inbox & AI Capture</h1>
-          <p className="text-sm text-gray-400 mt-1">
-            Dump scattered thoughts, emails, meeting transcripts, or voice notes. Let AI structure them into tasks with human review.
+          <h1 className="font-display text-2xl md:text-3xl text-[#0A0A0A] tracking-wider uppercase mt-1">
+            INBOX & TRANSMISSION CAPTURE
+          </h1>
+          <p className="font-label text-xs text-[#555555] tracking-wider mt-1">
+            PASTE RAW TRANSMISSIONS, MEMOS, OR BRIEFS FOR AI STRUCTURAL DECODING
           </p>
+        </div>
+
+        <div className="hidden sm:block">
+          <UfoIllustration className="w-20 h-16" />
         </div>
       </div>
 
       {successBanner && (
-        <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-center gap-3 text-emerald-400 text-sm">
+        <div className="p-4 bg-[#FFFFFF] border-2 border-[#0A0A0A] rounded-2xl flex items-center gap-3 text-[#0A0A0A] font-mono text-xs font-bold sticker-shadow">
           <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
           <span>{successBanner}</span>
         </div>
       )}
 
       {/* Main Capture Box */}
-      <div className="bg-[#111114] border border-gray-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
-        <div className="flex items-center justify-between mb-4">
-          <label className="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-2">
-            <FileText className="w-4 h-4 text-indigo-400" />
-            Quick Capture Text or Notes
+      <div className="bg-[#FFFFFF] border-2 border-[#0A0A0A] rounded-[24px] p-6 shadow-[6px_6px_0px_#0A0A0A] relative overflow-hidden">
+        <div className="flex items-center justify-between mb-3 border-b-2 border-[#0A0A0A]/10 pb-3">
+          <label className="font-label text-xs font-bold text-[#0A0A0A] flex items-center gap-2">
+            <FileText className="w-4 h-4 text-[#0A0A0A]" />
+            RAW TRANSMISSION INPUT (UNSTRUCTURED TEXT)
           </label>
-          <span className="text-xs text-gray-500">Supports multi-line text, meeting bullets & emails</span>
+          <span className="font-mono text-[10px] text-[#555555]">ENCRYPTED LOCAL PARSER</span>
         </div>
 
         <textarea
           rows={5}
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
-          placeholder="e.g. Prepare the revised proposal for my client by Friday. Update the pricing and send a confirmation message..."
-          className="w-full bg-[#0a0a0c] border border-gray-800/80 rounded-xl p-4 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:border-indigo-500/80 transition-all resize-y"
+          placeholder="e.g. Prepare revised proposal for client Acme by Friday. Update pricing and send confirmation message..."
+          className="w-full bg-[#F4F4F0] border-2 border-[#0A0A0A] rounded-xl p-4 font-mono text-xs text-[#0A0A0A] placeholder-[#888888] focus:outline-none focus:shadow-[4px_4px_0px_#0A0A0A] transition-all resize-y"
         />
 
-        {/* Quick Idea Templates */}
+        {/* Quick Example Pills */}
         <div className="mt-4 flex flex-wrap items-center gap-2">
-          <span className="text-[11px] font-semibold text-gray-500 flex items-center gap-1">
-            <Lightbulb className="w-3.5 h-3.5 text-amber-400" /> Try an example:
+          <span className="font-label text-[10px] font-bold text-[#555555] flex items-center gap-1">
+            <Lightbulb className="w-3.5 h-3.5 text-[#0A0A0A]" /> SAMPLE TRANSMISSIONS:
           </span>
           <button
-            onClick={() => handleTemplateExample("Revise client proposal by Friday, schedule review call with Sarah, and email invoice summary.")}
-            className="text-xs bg-gray-900 hover:bg-gray-800 text-gray-300 px-2.5 py-1 rounded-lg border border-gray-800 transition-colors"
+            onClick={() => setInputText("Revise client proposal by Friday, schedule review call with Sarah, and email invoice summary.")}
+            className="font-label text-[10px] bg-[#DEDEC8] hover:bg-[#FFFFFF] border border-[#0A0A0A] text-[#0A0A0A] px-2.5 py-1 rounded-lg transition-colors font-bold cursor-pointer"
           >
-            Client Proposal & Invoice
+            CLIENT PROPOSAL & INVOICE
           </button>
           <button
-            onClick={() => handleTemplateExample("Write outline for YouTube video by Wednesday, record intro on Thursday, and publish by Sunday.")}
-            className="text-xs bg-gray-900 hover:bg-gray-800 text-gray-300 px-2.5 py-1 rounded-lg border border-gray-800 transition-colors"
+            onClick={() => setInputText("Write outline for YouTube video by Wednesday, record intro on Thursday, and publish by Sunday.")}
+            className="font-label text-[10px] bg-[#DEDEC8] hover:bg-[#FFFFFF] border border-[#0A0A0A] text-[#0A0A0A] px-2.5 py-1 rounded-lg transition-colors font-bold cursor-pointer"
           >
-            Content Creator Schedule
+            CONTENT CREATOR SCHEDULE
           </button>
           <button
-            onClick={() => handleTemplateExample("Finish Chapter 4 study notes, submit calculus assignment by tomorrow 5 PM, review flashcards.")}
-            className="text-xs bg-gray-900 hover:bg-gray-800 text-gray-300 px-2.5 py-1 rounded-lg border border-gray-800 transition-colors"
+            onClick={() => setInputText("Finish Chapter 4 study notes, submit calculus assignment by tomorrow 5 PM, review flashcards.")}
+            className="font-label text-[10px] bg-[#DEDEC8] hover:bg-[#FFFFFF] border border-[#0A0A0A] text-[#0A0A0A] px-2.5 py-1 rounded-lg transition-colors font-bold cursor-pointer"
           >
-            Student Study Plan
+            STUDENT STUDY PLAN
           </button>
         </div>
 
@@ -156,17 +159,17 @@ export default function CaptureInboxPage() {
           <button
             onClick={handleProcess}
             disabled={isLoading || !inputText.trim()}
-            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 disabled:opacity-40 text-white font-semibold text-sm shadow-lg shadow-indigo-600/25 transition-all cursor-pointer"
+            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-[#0A0A0A] text-[#FFFFFF] font-label text-xs font-bold sticker-shadow-lift cursor-pointer disabled:opacity-40"
           >
             {isLoading ? (
               <>
-                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                Analyzing with AI...
+                <div className="w-4 h-4 border-2 border-[#FFFFFF]/30 border-t-[#FFFFFF] rounded-full animate-spin" />
+                <span>DECODING TRANSMISSION...</span>
               </>
             ) : (
               <>
-                <Sparkles className="w-4 h-4 text-amber-300" />
-                Extract Action Items
+                <Sparkles className="w-4 h-4" />
+                <span>EXTRACT ACTION ITEMS</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}
@@ -175,11 +178,11 @@ export default function CaptureInboxPage() {
       </div>
 
       {/* Feed of Processed Tasks */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-bold text-white flex items-center gap-2">
-            <ListTodo className="w-5 h-5 text-indigo-400" />
-            Recently Captured & Approved Tasks ({recentTasks.length})
+      <div className="space-y-4 pt-4">
+        <div className="flex items-center justify-between border-b-2 border-[#0A0A0A] pb-3">
+          <h2 className="font-display text-sm text-[#0A0A0A] tracking-wider uppercase flex items-center gap-2">
+            <ListTodo className="w-4 h-4 text-[#0A0A0A]" />
+            RECENTLY LOGGED MISSION ITEMS ({recentTasks.length})
           </h2>
         </div>
 
@@ -187,39 +190,31 @@ export default function CaptureInboxPage() {
           {recentTasks.map((task) => (
             <div
               key={task.id}
-              className="bg-[#111114] border border-gray-800 hover:border-gray-700/80 rounded-xl p-4 transition-all flex flex-col justify-between gap-3"
+              className="bg-[#FFFFFF] border-2 border-[#0A0A0A] rounded-2xl p-4 flex flex-col justify-between gap-3 sticker-shadow-sm hover:translate-x-0.5 hover:translate-y-0.5 transition-transform"
             >
               <div className="flex items-start justify-between gap-3">
-                <span className="text-sm font-semibold text-gray-200">{task.title}</span>
-                <span
-                  className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${
-                    task.priority === "urgent"
-                      ? "bg-rose-500/20 text-rose-400 border border-rose-500/30"
-                      : task.priority === "high"
-                      ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
-                      : "bg-blue-500/20 text-blue-400 border border-blue-500/30"
-                  }`}
-                >
+                <span className="font-bold text-xs text-[#0A0A0A] leading-snug">{task.title}</span>
+                <span className="font-label text-[9px] bg-[#0A0A0A] text-[#FFFFFF] px-2 py-0.5 rounded font-bold uppercase tracking-wider flex-shrink-0">
                   {task.priority}
                 </span>
               </div>
 
-              <div className="flex items-center justify-between text-xs text-gray-500 pt-2 border-t border-gray-800/60">
-                <span className="flex items-center gap-1.5 text-gray-400">
-                  <FolderKanban className="w-3.5 h-3.5 text-indigo-400" />
-                  {task.project_name || "General"}
+              <div className="flex items-center justify-between font-label text-[10px] text-[#555555] pt-2 border-t border-[#0A0A0A]/10">
+                <span className="flex items-center gap-1.5 text-[#0A0A0A] font-bold">
+                  <FolderKanban className="w-3.5 h-3.5 text-[#0A0A0A]" />
+                  {task.project_name || "GENERAL"}
                 </span>
 
                 <div className="flex items-center gap-3">
                   {task.due_date && (
-                    <span className="flex items-center gap-1 text-gray-400">
+                    <span className="flex items-center gap-1 font-mono text-[#555555]">
                       <Clock className="w-3.5 h-3.5" />
                       {task.due_date}
                     </span>
                   )}
                   {task.ai_generated && (
-                    <span className="text-[10px] text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded border border-indigo-500/20 font-bold">
-                      AI
+                    <span className="font-label text-[9px] bg-[#DEDEC8] border border-[#0A0A0A] text-[#0A0A0A] px-1.5 py-0.2 rounded font-bold">
+                      AI DECODED
                     </span>
                   )}
                 </div>

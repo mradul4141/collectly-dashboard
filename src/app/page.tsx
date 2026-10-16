@@ -2,33 +2,47 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
-import { User, Mail, Clock, AlertCircle, Star, TrendingUp, ArrowRight } from "lucide-react";
-import WaveGridBackground from "@/components/wave-grid-background";
-import RadialGlowButton from "@/components/radial-glow-button";
+import { 
+  User, Mail, Clock, AlertCircle, Star, TrendingUp, ArrowRight, 
+  Sparkles, ShieldCheck, Check, Send, FileText, Zap, Compass
+} from "lucide-react";
+import { 
+  AstronautIllustration, 
+  UfoIllustration, 
+  PlanetIllustration, 
+  TelescopeIllustration, 
+  StarryBlob, 
+  SpiralLogo 
+} from "@/components/illustrations/retro-space";
 
 export default function LandingPage() {
-  const [activeTab, setActiveTab] = useState("Desktop");
+  const [activeTab, setActiveTab] = useState("Mission Control");
   const [activeNav, setActiveNav] = useState("Home");
 
   const floatingVariants = {
     animate1: {
-      y: ["-20px", "20px", "-20px"],
-      x: ["-10px", "10px", "-10px"],
-      transition: { repeat: Infinity, duration: 6, ease: "easeInOut" }
+      y: ["-15px", "15px", "-15px"],
+      x: ["-8px", "8px", "-8px"],
+      rotate: [-3, 3, -3],
+      transition: { repeat: Infinity, duration: 7, ease: "easeInOut" }
     },
     animate2: {
-      y: ["20px", "-20px", "20px"],
+      y: ["18px", "-18px", "18px"],
       x: ["10px", "-10px", "10px"],
-      transition: { repeat: Infinity, duration: 7, ease: "easeInOut" }
+      rotate: [2, -2, 2],
+      transition: { repeat: Infinity, duration: 8.5, ease: "easeInOut" }
+    },
+    animate3: {
+      y: ["-10px", "10px", "-10px"],
+      transition: { repeat: Infinity, duration: 6, ease: "easeInOut" }
     }
   } as any;
 
-  const navItems = ["Home", "Invoices", "Automations", "Clients", "Payments", "Reports"];
-  const subTabs = ["Desktop", "Lite", "Pro"];
+  const navItems = ["Home", "Features", "Automations", "Telemetry", "Dispatch"];
+  const subTabs = ["Mission Control", "AI Capture", "Autonomous Cadence"];
 
-  // Simple scroll spy to update activeNav based on scroll position
+  // Scroll spy
   useEffect(() => {
     const handleScroll = () => {
       const sections = navItems.map(item => document.getElementById(`section-${item.toLowerCase()}`));
@@ -39,8 +53,7 @@ export default function LandingPage() {
         if (section && section.offsetTop <= scrollPosition) {
           setActiveNav(navItems[i]);
           break;
-        } else if (window.scrollY < 500) {
-          // If at the very top, keep the first item active or reset
+        } else if (window.scrollY < 400) {
           setActiveNav("Home");
         }
       }
@@ -63,504 +76,485 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#060606] font-sans selection:bg-orange-500 selection:text-white overflow-hidden flex flex-col relative text-white">
+    <div className="min-h-screen bg-[#DEDEC8] font-sans selection:bg-[#0A0A0A] selection:text-white overflow-hidden flex flex-col relative text-[#0A0A0A]">
       
-      {/* Background ambient glows */}
-      <div className="fixed top-[20%] left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-orange-600/10 blur-[150px] rounded-full pointer-events-none z-0"></div>
+      {/* Background halftone dot pattern */}
+      <div className="fixed inset-0 bg-[radial-gradient(#0a0a0a_1.2px,transparent_1.2px)] [background-size:24px_24px] opacity-15 pointer-events-none z-0"></div>
 
-      {/* Floating Elements */}
+      {/* FLOATING VINTAGE SPACE ILLUSTRATIONS */}
       <motion.div 
         variants={floatingVariants}
         animate="animate1"
-        className="fixed left-[10%] top-[40%] w-16 h-16 rounded-full bg-orange-500/5 shadow-[0_0_40px_rgba(249,115,22,0.4)] border border-orange-500/20 flex items-center justify-center z-10 backdrop-blur-md pointer-events-none"
+        className="fixed left-[4%] top-[25%] pointer-events-none z-10 hidden lg:block opacity-85"
       >
-        <div className="w-6 h-6 rounded-full bg-orange-500/40 shadow-[0_0_15px_rgba(249,115,22,1)]"></div>
+        <AstronautIllustration className="w-48 h-48 drop-shadow-[6px_6px_0px_#0A0A0A]" />
       </motion.div>
 
       <motion.div 
         variants={floatingVariants}
         animate="animate2"
-        className="fixed right-[15%] top-[30%] w-20 h-20 rounded-full bg-blue-500/5 shadow-[0_0_40px_rgba(59,130,246,0.3)] border border-blue-500/20 flex items-center justify-center z-10 backdrop-blur-md pointer-events-none"
+        className="fixed right-[5%] top-[18%] pointer-events-none z-10 hidden lg:block opacity-85"
       >
-        <div className="w-8 h-8 rounded-full bg-blue-500/30 shadow-[0_0_20px_rgba(59,130,246,0.8)] flex items-center justify-center">
-          <div className="w-3 h-3 bg-white rounded-full blur-[1px]"></div>
-        </div>
+        <UfoIllustration className="w-52 h-44 drop-shadow-[6px_6px_0px_#0A0A0A]" />
       </motion.div>
 
-      {/* FIXED Top Navbar */}
-      <div className="fixed top-6 left-0 right-0 w-full flex items-center justify-between px-6 md:px-12 z-50 pointer-events-none">
+      <motion.div 
+        variants={floatingVariants}
+        animate="animate3"
+        className="fixed right-[8%] bottom-[20%] pointer-events-none z-10 hidden xl:block opacity-75"
+      >
+        <PlanetIllustration className="w-40 h-40 drop-shadow-[5px_5px_0px_#0A0A0A]" />
+      </motion.div>
+
+      {/* FIXED TOP RETRO NAVBAR */}
+      <header className="fixed top-5 left-0 right-0 w-full flex items-center justify-between px-6 md:px-12 z-50 pointer-events-none">
         
-        {/* LOGO */}
-        <div className="pointer-events-auto flex items-center gap-2">
-           <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black font-bold">c</div>
-           <span className="font-bold text-white text-lg tracking-tight">collectly.</span>
+        {/* LOGO BADGE */}
+        <div className="pointer-events-auto flex items-center gap-2.5 bg-white border-2 border-[#0A0A0A] px-4 py-2 rounded-full shadow-[4px_4px_0px_#0A0A0A] hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0px_#0A0A0A] transition-all">
+          <SpiralLogo className="w-6 h-6 text-[#0A0A0A]" />
+          <span className="font-display text-sm tracking-tight uppercase text-[#0A0A0A]">
+            COLLECTLY <span className="font-label text-xs tracking-widest text-[#0A0A0A]/60 font-bold ml-1">2.0</span>
+          </span>
         </div>
 
-        {/* NAV */}
-        <nav className="hidden md:flex bg-[#0a0a0a]/90 backdrop-blur-md border border-gray-800 rounded-full p-1 gap-2 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)] pointer-events-auto">
+        {/* NAVIGATION PILLS */}
+        <nav className="hidden md:flex bg-white border-2 border-[#0A0A0A] rounded-full p-1 gap-1.5 shadow-[4px_4px_0px_#0A0A0A] pointer-events-auto">
           {navItems.map((item) => (
             <button
               key={item}
               onClick={() => scrollToSection(item)}
-              className={`relative px-5 py-2 text-[13px] font-medium transition-colors ${
-                activeNav === item ? "text-white" : "text-gray-400 hover:text-gray-200"
+              className={`relative px-4 py-1.5 font-label text-xs uppercase tracking-wider font-bold transition-all rounded-full ${
+                activeNav === item 
+                  ? "bg-[#0A0A0A] text-white shadow-[2px_2px_0px_#0A0A0A]" 
+                  : "text-[#0A0A0A] hover:bg-[#DEDEC8]"
               }`}
             >
-              {activeNav === item && (
-                <motion.div
-                  layoutId="navGlow"
-                  className="absolute inset-0 bg-white/10 rounded-full z-0"
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                />
-              )}
-              <span className="relative z-10">{item}</span>
+              {item}
             </button>
           ))}
         </nav>
 
-        {/* CTA */}
+        {/* CTA BUTTON */}
         <div className="pointer-events-auto">
-           <Link href="/dashboard/capture">
-              <RadialGlowButton className="min-w-[140px] min-h-[44px] py-2 px-5 text-[13px] rounded-full">
-                Enter Workspace
-                <div className="bg-white/20 text-white rounded-full w-5 h-5 flex items-center justify-center ml-1">
-                  <ArrowRight className="w-3 h-3 -rotate-45"/>
-                </div>
-              </RadialGlowButton>
-           </Link>
+          <Link href="/dashboard/capture">
+            <button className="flex items-center gap-2 px-5 py-2.5 bg-[#0A0A0A] text-white rounded-full font-label text-xs uppercase tracking-wider font-bold border-2 border-[#0A0A0A] shadow-[4px_4px_0px_#0A0A0A] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#0A0A0A] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0px_#0A0A0A] transition-all">
+              <span>ENTER WORKSPACE</span>
+              <ArrowRight className="w-3.5 h-3.5 -rotate-45" />
+            </button>
+          </Link>
         </div>
-      </div>
+      </header>
 
-      {/* Main Content */}
-      <main className="flex-1 w-full flex flex-col items-center pt-32 z-20 relative">
+      {/* MAIN HERO CONTENT */}
+      <main className="flex-1 w-full flex flex-col items-center pt-32 sm:pt-36 z-20 relative">
         
         {/* HERO SECTION */}
-        <section className="w-full flex flex-col items-center min-h-[90vh] relative">
+        <section id="section-home" className="w-full flex flex-col items-center min-h-[85vh] px-6 text-center max-w-6xl relative">
           
-          {/* Interactive 3D Wave Grid Theme Background */}
-          <div className="absolute inset-0 -top-32 w-full h-[120%] pointer-events-auto z-0 overflow-hidden opacity-90">
-            <WaveGridBackground 
-              colorBase="#0a0a0a" 
-              colorHigh="#f97316" 
-              gridSize={40}
-              waveAmplitude={0.7}
-              waveSpeed={7.5}
-              waveFrequency={1.4}
-              waveWidth={3.5}
-            />
-            {/* Soft radial/gradient blending so text stays crisp */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#060606]/60 via-transparent to-[#060606] pointer-events-none" />
-            <div className="absolute inset-0 bg-radial-[circle_at_center_rgba(0,0,0,0.3)] pointer-events-none" />
-          </div>
-
-          <div className="relative z-10 flex flex-col items-center w-full pointer-events-auto">
-          
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
+          {/* VINTAGE TELEMETRY BADGE */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border-2 border-[#0A0A0A] shadow-[3px_3px_0px_#0A0A0A] mb-8 font-label text-xs uppercase tracking-widest font-bold"
+          >
+            <span className="w-2 h-2 rounded-full bg-[#0A0A0A] inline-block"></span>
+            <span>AUTONOMOUS WORKSPACE & INK INTELLIGENCE</span>
+          </motion.div>
+
+          {/* RETRO 3D STACKED HEADLINE */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-[60px] md:text-[88px] font-bold text-center leading-[1.1] tracking-tight max-w-5xl mb-6 text-white"
+            className="relative mb-6 select-none"
           >
-            Automate cash flow<br />
-            <span className="font-serif italic font-normal text-gray-300 tracking-normal">with thoughtful design</span>
-          </motion.h1>
+            {/* Background 3D Stack Offset Shadow */}
+            <h1 className="text-[44px] sm:text-[72px] md:text-[96px] font-display text-[#0A0A0A]/20 leading-[0.95] tracking-tight uppercase absolute top-2 left-2 pointer-events-none select-none">
+              CAPTURE. PLAN.<br />
+              EXECUTE.
+            </h1>
+            <h1 className="text-[44px] sm:text-[72px] md:text-[96px] font-display text-[#0A0A0A] leading-[0.95] tracking-tight uppercase relative z-10">
+              CAPTURE. PLAN.<br />
+              EXECUTE.
+            </h1>
+          </motion.div>
 
+          {/* SUBTITLE */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-            className="text-gray-400 text-center max-w-2xl text-[15px] mb-10 leading-relaxed"
+            transition={{ duration: 0.8, delay: 0.15 }}
+            className="text-sm sm:text-base md:text-lg text-[#0A0A0A]/80 max-w-2xl font-sans leading-relaxed mb-10"
           >
-            At Collectly space, we help modern agencies tackle their biggest cash flow challenges with tailored solutions, guiding you from unpaid invoices to money in the bank.
+            Collectly 2.0 transforms scattered thoughts, meeting transcripts, and unpaid receivables into verified missions, automated follow-ups, and structured deliverables.
           </motion.p>
 
+          {/* HERO ACTIONS */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="flex flex-col md:flex-row items-center gap-6 mb-16"
+            transition={{ duration: 0.8, delay: 0.25 }}
+            className="flex flex-col sm:flex-row items-center gap-4 mb-14"
           >
-             <Link href="/dashboard/capture" className="hover:scale-105 active:scale-95 transition-transform duration-200">
-                <RadialGlowButton className="min-w-[190px] min-h-[56px] py-3.5 px-7 text-[16px] font-bold shadow-[0_0_35px_rgba(249,115,22,0.4)]">
-                  Launch Workspace 2.0
-                  <div className="bg-white/20 text-white rounded-full w-7 h-7 flex items-center justify-center ml-2">
-                    <ArrowRight className="w-4 h-4 -rotate-45"/>
-                  </div>
-                </RadialGlowButton>
-             </Link>
-             
-             <div className="flex items-center gap-4 md:border-l border-gray-800 md:pl-6">
-                <div className="flex -space-x-2">
-                  <div className="w-8 h-8 rounded-full border-2 border-black bg-blue-500 flex items-center justify-center text-[10px] font-bold text-white">AJ</div>
-                  <div className="w-8 h-8 rounded-full border-2 border-black bg-emerald-500 flex items-center justify-center text-[10px] font-bold text-white">MR</div>
-                  <div className="w-8 h-8 rounded-full border-2 border-black bg-orange-500 flex items-center justify-center text-[10px] font-bold text-white">CK</div>
-                </div>
-                <div>
-                  <div className="flex text-orange-500 mb-1">
-                     <div className="text-xs font-bold">AGENCY TOOLKIT</div>
-                  </div>
-                  <div className="text-[11px] text-gray-500">
-                     Built for modern agencies
-                  </div>
-                </div>
-             </div>
+            <Link href="/dashboard/capture">
+              <button className="flex items-center gap-3 px-8 py-4 bg-[#0A0A0A] text-white rounded-full font-label text-sm uppercase tracking-wider font-black border-2 border-[#0A0A0A] shadow-[5px_5px_0px_#0A0A0A] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[7px_7px_0px_#0A0A0A] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0px_#0A0A0A] transition-all">
+                <span>LAUNCH TRANSMISSION 2.0</span>
+                <ArrowRight className="w-4 h-4 -rotate-45" />
+              </button>
+            </Link>
+
+            <Link href="/dashboard/tasks">
+              <button className="flex items-center gap-2 px-7 py-4 bg-white text-[#0A0A0A] rounded-full font-label text-sm uppercase tracking-wider font-bold border-2 border-[#0A0A0A] shadow-[4px_4px_0px_#0A0A0A] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#0A0A0A] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0px_#0A0A0A] transition-all">
+                <Compass className="w-4 h-4" />
+                <span>EXPLORE MISSIONS</span>
+              </button>
+            </Link>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.4 }}
-            className="flex items-center gap-6 w-full max-w-4xl mb-16 opacity-50"
-          >
-             <div className="h-[1px] bg-gradient-to-r from-transparent to-gray-700 flex-1"></div>
-             <span className="text-[11px] text-gray-400 font-medium tracking-wide">Loved by big and small brands around the worlds</span>
-             <div className="h-[1px] bg-gradient-to-l from-transparent to-gray-700 flex-1"></div>
-          </motion.div>
+          {/* VINTAGE DIVIDER BAND */}
+          <div className="w-full max-w-4xl flex items-center gap-4 my-8 opacity-70">
+            <div className="h-0.5 bg-[#0A0A0A] flex-1"></div>
+            <span className="font-label text-xs uppercase tracking-widest font-bold text-[#0A0A0A]">
+              TELEMETRY LOG // VERIFIED BY 1,200+ ORBITAL CREWS
+            </span>
+            <div className="h-0.5 bg-[#0A0A0A] flex-1"></div>
+          </div>
 
-          {/* Sub Tabs */}
-          <div className="flex items-center gap-24 mb-16 border-b border-gray-800/50 w-full max-w-2xl justify-center relative">
+          {/* SUB-TABS SELECTOR */}
+          <div className="flex items-center gap-3 mb-8 bg-white border-2 border-[#0A0A0A] rounded-full p-1.5 shadow-[4px_4px_0px_#0A0A0A]">
             {subTabs.map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`pb-4 text-[15px] font-medium transition-colors relative ${
-                  activeTab === tab ? "text-white" : "text-gray-500 hover:text-gray-300"
+                className={`px-4 py-1.5 rounded-full font-label text-xs uppercase tracking-wider font-bold transition-all ${
+                  activeTab === tab
+                    ? "bg-[#0A0A0A] text-white shadow-[2px_2px_0px_#0A0A0A]"
+                    : "text-[#0A0A0A] hover:bg-[#DEDEC8]"
                 }`}
               >
                 {tab}
-                {activeTab === tab && (
-                  <motion.div
-                    layoutId="activeTabIndicator"
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.8)]"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                  />
-                )}
               </button>
             ))}
           </div>
 
-          {/* App Mockup */}
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }}
+          {/* RETRO DEVICE CONTAINER SHOWCASE */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            whileHover={{ scale: 1.02, y: -10 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="w-full max-w-5xl px-6 mb-24 cursor-pointer"
-            style={{ perspective: 2000 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="w-full max-w-5xl rounded-[24px] border-3 border-[#0A0A0A] bg-white shadow-[10px_10px_0px_#0A0A0A] overflow-hidden flex flex-col mb-24 relative text-left"
           >
-            <motion.div 
-              whileHover={{ rotateX: 2, rotateY: -1, boxShadow: "0 40px 100px -20px rgba(249,115,22,0.15)" }}
-              transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              className="w-full aspect-[16/10] bg-[#0c0c0c] border border-gray-800 rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)] flex flex-col relative"
-            >
-              
-              {/* Fake Browser Header */}
-              <div className="h-12 w-full bg-[#111] border-b border-gray-800/80 flex items-center px-4 justify-between">
-                <div className="flex gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
-                  <div className="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"></div>
-                </div>
-                <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center w-64 h-6 bg-[#050505] border border-gray-800 rounded-md">
-                  <span className="text-[10px] text-gray-500">dashboard.app</span>
-                </div>
-                <div></div>
+            {/* Terminal Top Bar */}
+            <div className="bg-[#DEDEC8] border-b-2 border-[#0A0A0A] px-5 py-3 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-3.5 h-3.5 rounded-full bg-white border-2 border-[#0A0A0A]"></div>
+                <div className="w-3.5 h-3.5 rounded-full bg-[#0A0A0A]"></div>
+                <div className="w-3.5 h-3.5 rounded-full bg-white border-2 border-[#0A0A0A]"></div>
               </div>
 
-              {/* Mockup Body Content */}
-              <div className="flex-1 relative bg-black">
-                <AnimatePresence mode="wait">
-                  <motion.div 
-                    key={activeTab}
+              <div className="bg-white border-2 border-[#0A0A0A] rounded-full px-4 py-0.5 font-label text-[11px] font-bold tracking-widest uppercase text-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]">
+                TERMINAL // SECTOR_04 // COLLECTLY_OS_v2.0
+              </div>
+
+              <div className="font-label text-[11px] font-bold tracking-widest uppercase text-[#0A0A0A]">
+                ONLINE
+              </div>
+            </div>
+
+            {/* Terminal Body Content */}
+            <div className="p-6 sm:p-8 bg-white min-h-[380px] flex flex-col justify-between">
+              <AnimatePresence mode="wait">
+                {activeTab === "Mission Control" && (
+                  <motion.div
+                    key="mc"
                     initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 1.02 }}
-                    transition={{ duration: 0.4 }}
-                    className="w-full h-full relative"
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.3 }}
+                    className="grid grid-cols-1 md:grid-cols-3 gap-4"
                   >
-                    <Image 
-                      src="/dashboard.jpg" 
-                      alt="Dashboard UI" 
-                      fill 
-                      className="object-cover object-top opacity-90"
-                      priority
-                    />
-                    
-                    {/* Overlays */}
-                    {activeTab === "Lite" && (
-                       <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center">
-                          <div className="w-[300px] h-[500px] bg-[#0a0a0a] border border-gray-800 rounded-[40px] shadow-2xl relative overflow-hidden flex flex-col">
-                             <div className="p-6 border-b border-gray-800 bg-[#111]">
-                                <div className="w-full h-4 bg-gray-800 rounded mb-4"></div>
-                                <div className="flex gap-2">
-                                  <div className="w-1/2 h-8 bg-orange-500/20 rounded"></div>
-                                  <div className="w-1/2 h-8 bg-gray-800 rounded"></div>
-                                </div>
-                             </div>
-                             <div className="flex-1 p-6 flex flex-col gap-4">
-                                <div className="w-full h-16 bg-gray-900 rounded-xl"></div>
-                                <div className="w-full h-16 bg-gray-900 rounded-xl"></div>
-                                <div className="w-full h-16 bg-gray-900 rounded-xl"></div>
-                             </div>
-                          </div>
-                       </div>
-                    )}
-                    {activeTab === "Pro" && (
-                      <div className="absolute inset-0 bg-orange-500/5 mix-blend-overlay"></div>
-                    )}
-                  </motion.div>
-                </AnimatePresence>
-              </div>
+                    <div className="bg-[#DEDEC8] border-2 border-[#0A0A0A] rounded-[18px] p-5 shadow-[4px_4px_0px_#0A0A0A]">
+                      <div className="font-label text-xs uppercase tracking-wider font-bold mb-2">01 // INTAKE</div>
+                      <div className="font-display text-2xl text-[#0A0A0A] mb-1">12 PAYLOADS</div>
+                      <p className="text-xs text-[#0A0A0A]/70 font-sans">Raw voice memos & messages awaiting operator sign-off.</p>
+                    </div>
 
-              <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-[#060606] to-transparent pointer-events-none"></div>
-            </motion.div>
+                    <div className="bg-[#DEDEC8] border-2 border-[#0A0A0A] rounded-[18px] p-5 shadow-[4px_4px_0px_#0A0A0A]">
+                      <div className="font-label text-xs uppercase tracking-wider font-bold mb-2">02 // ACTIVE ORBITS</div>
+                      <div className="font-display text-2xl text-[#0A0A0A] mb-1">4 PROJECTS</div>
+                      <p className="text-xs text-[#0A0A0A]/70 font-sans">Milestone deliverables in staging & quality assurance.</p>
+                    </div>
+
+                    <div className="bg-[#0A0A0A] text-white border-2 border-[#0A0A0A] rounded-[18px] p-5 shadow-[4px_4px_0px_#0A0A0A]">
+                      <div className="font-label text-xs uppercase tracking-wider font-bold text-white/70 mb-2">03 // RECOVERED</div>
+                      <div className="font-display text-2xl text-white mb-1">$24,800.00</div>
+                      <p className="text-xs text-white/70 font-sans">Auto-chased outstanding payments settled in full.</p>
+                    </div>
+                  </motion.div>
+                )}
+
+                {activeTab === "AI Capture" && (
+                  <motion.div
+                    key="aic"
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.3 }}
+                    className="bg-[#DEDEC8] border-2 border-[#0A0A0A] rounded-[18px] p-6 shadow-[5px_5px_0px_#0A0A0A] space-y-4"
+                  >
+                    <div className="flex items-center justify-between border-b-2 border-[#0A0A0A] pb-3">
+                      <span className="font-label text-xs uppercase font-bold tracking-widest">
+                        INTELLIGENCE INGESTION // TYPEWRITER TRANSMISSION
+                      </span>
+                      <span className="font-label text-[10px] uppercase font-bold px-2 py-0.5 bg-white border border-[#0A0A0A] rounded-full">
+                        HUMAN IN THE LOOP
+                      </span>
+                    </div>
+                    <p className="font-mono text-xs sm:text-sm text-[#0A0A0A] bg-white border-2 border-[#0A0A0A] p-4 rounded-[12px] shadow-[2px_2px_0px_#0A0A0A]">
+                      &quot;Finalize mobile responsive navigation by Tuesday, bill Acme Corp $4,500 milestone payment, and schedule flight check with engineering team.&quot;
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <span className="font-label text-xs uppercase tracking-wider font-bold">DETECTED ASSETS:</span>
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#0A0A0A] text-white font-label text-[10px] uppercase font-bold">2 TASKS</span>
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#0A0A0A] text-white font-label text-[10px] uppercase font-bold">1 INVOICE DUE</span>
+                      <span className="px-2.5 py-0.5 rounded-full bg-white border border-[#0A0A0A] font-label text-[10px] uppercase font-bold">REVIEW STAGED</span>
+                    </div>
+                  </motion.div>
+                )}
+
+                {activeTab === "Autonomous Cadence" && (
+                  <motion.div
+                    key="ac"
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.3 }}
+                    className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                  >
+                    <div className="bg-white border-2 border-[#0A0A0A] rounded-[18px] p-5 shadow-[4px_4px_0px_#0A0A0A]">
+                      <div className="font-label text-xs uppercase tracking-wider font-bold mb-2 flex items-center gap-1.5">
+                        <Zap className="w-3.5 h-3.5" /> RELAY #1: MSME 43B(H) ALERT
+                      </div>
+                      <p className="text-xs text-[#0A0A0A]/80 font-sans">
+                        Auto-calculates the 45-day statutory limit on tax deductions and alerts your team at Day 40.
+                      </p>
+                    </div>
+
+                    <div className="bg-white border-2 border-[#0A0A0A] rounded-[18px] p-5 shadow-[4px_4px_0px_#0A0A0A]">
+                      <div className="font-label text-xs uppercase tracking-wider font-bold mb-2 flex items-center gap-1.5">
+                        <Mail className="w-3.5 h-3.5" /> RELAY #2: POLITE RECEIVABLES NUDGE
+                      </div>
+                      <p className="text-xs text-[#0A0A0A]/80 font-sans">
+                        Automated, courteous reminder sent 3 days prior to milestone payment due dates with direct pay links.
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Bottom Console Status */}
+              <div className="pt-6 border-t-2 border-[#0A0A0A]/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-label uppercase tracking-wider">
+                <span className="text-[#0A0A0A]/70">ALL SYSTEMS NOMINAL // ZERO TELEMETRY DRIFT</span>
+                <Link href="/dashboard/capture" className="font-bold text-[#0A0A0A] hover:underline flex items-center gap-1">
+                  ENTER LIVE RUNTIME <ArrowRight className="w-3 h-3" />
+                </Link>
+              </div>
+            </div>
           </motion.div>
+        </section>
+
+        {/* SECTION 1: INK CARTRIDGE FEATURES */}
+        <section id="section-features" className="w-full max-w-5xl px-6 py-20 border-t-2 border-[#0A0A0A]">
+          <div className="text-center mb-16">
+            <span className="font-label text-xs uppercase tracking-widest font-bold px-3 py-1 bg-white border-2 border-[#0A0A0A] rounded-full shadow-[2px_2px_0px_#0A0A0A] inline-block mb-3">
+              CAPABILITIES & SPECS
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-display uppercase tracking-tight text-[#0A0A0A]">
+              PRECISION WORKSPACE MODULES
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Card 1 */}
+            <div className="bg-white border-2 border-[#0A0A0A] rounded-[22px] p-6 shadow-[5px_5px_0px_#0A0A0A] flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-full bg-[#0A0A0A] text-white flex items-center justify-center font-bold mb-4 border border-[#0A0A0A]">
+                  <Sparkles className="w-5 h-5" />
+                </div>
+                <h3 className="font-display text-lg uppercase text-[#0A0A0A] mb-2">AI CAPTURE INBOX</h3>
+                <p className="text-xs text-[#0A0A0A]/75 font-sans leading-relaxed">
+                  Dump raw voice notes, thoughts, and meeting summaries into an omni-channel terminal. Human confirmation gates prevent phantom entries.
+                </p>
+              </div>
+              <div className="mt-6 pt-4 border-t border-[#0A0A0A]/10 font-label text-[11px] font-bold uppercase tracking-wider text-[#0A0A0A]">
+                SPEC // STAGED REVIEW MODAL
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-white border-2 border-[#0A0A0A] rounded-[22px] p-6 shadow-[5px_5px_0px_#0A0A0A] flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-full bg-[#0A0A0A] text-white flex items-center justify-center font-bold mb-4 border border-[#0A0A0A]">
+                  <Compass className="w-5 h-5" />
+                </div>
+                <h3 className="font-display text-lg uppercase text-[#0A0A0A] mb-2">ORBITAL KANBAN</h3>
+                <p className="text-xs text-[#0A0A0A]/75 font-sans leading-relaxed">
+                  4-column project telemetry board with real-time status shifts, priority stamps, and parent project linkages.
+                </p>
+              </div>
+              <div className="mt-6 pt-4 border-t border-[#0A0A0A]/10 font-label text-[11px] font-bold uppercase tracking-wider text-[#0A0A0A]">
+                SPEC // DRAG-FREE DIRECT DISPATCH
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="bg-white border-2 border-[#0A0A0A] rounded-[22px] p-6 shadow-[5px_5px_0px_#0A0A0A] flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-full bg-[#0A0A0A] text-white flex items-center justify-center font-bold mb-4 border border-[#0A0A0A]">
+                  <FileText className="w-5 h-5" />
+                </div>
+                <h3 className="font-display text-lg uppercase text-[#0A0A0A] mb-2">SMART RECEIVABLES</h3>
+                <p className="text-xs text-[#0A0A0A]/75 font-sans leading-relaxed">
+                  Track client invoices, dispute resolutions, and automated payment chasing without burning bridges.
+                </p>
+              </div>
+              <div className="mt-6 pt-4 border-t border-[#0A0A0A]/10 font-label text-[11px] font-bold uppercase tracking-wider text-[#0A0A0A]">
+                SPEC // ESCROW & STRIPE READY
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Integrations Marquee */}
-        <div className="w-full overflow-hidden flex whitespace-nowrap mb-24 relative border-y border-gray-900 py-10 bg-[#050505]">
-          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#060606] to-transparent z-10 pointer-events-none"></div>
-          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#060606] to-transparent z-10 pointer-events-none"></div>
-          
-          <motion.div 
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
-            className="flex items-center gap-16 px-8"
-          >
-            {[...Array(2)].map((_, i) => (
-              <div key={i} className="flex items-center gap-16">
-                 {["Stripe", "QuickBooks", "Xero", "PayPal", "Plaid", "Square", "Shopify", "Zapier"].map((integration, idx) => (
-                    <div key={idx} className="flex items-center gap-3 opacity-40 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 cursor-pointer">
-                      <div className="w-8 h-8 rounded bg-white/10 border border-white/5 flex items-center justify-center font-bold text-white text-xs">{integration[0]}</div>
-                      <span className="text-xl font-bold text-white tracking-tight">{integration}</span>
-                    </div>
-                 ))}
-              </div>
-            ))}
-          </motion.div>
-        </div>
-
-        {/* FEATURE SECTIONS (SCROLL DEMOS) */}
-        <div className="w-full max-w-5xl px-6 flex flex-col gap-32 pb-32">
-          
-          {/* 1. Smart Invoices */}
-          <section id="section-invoices" className="w-full min-h-[60vh] flex flex-col justify-center border-t border-gray-800 pt-16">
-            <h2 className="text-4xl font-bold mb-4">Smart Invoices</h2>
-            <p className="text-gray-400 mb-12 max-w-xl">Create, send, and track professional invoices in seconds. Stop guessing if they’ve been seen.</p>
-            
-            <div className="w-full relative h-[450px] flex items-center justify-center perspective-[1000px]">
-               {/* Stack of Invoices */}
-               {[
-                 { amount: "$4,500.00", status: "PAID", client: "Acme Corp", date: "Oct 12", delay: 0 },
-                 { amount: "$12,250.00", status: "VIEWED", client: "Stark Industries", date: "Oct 15", delay: 0.2 },
-                 { amount: "$890.00", status: "OVERDUE", client: "Globex", date: "Oct 01", delay: 0.4 }
-               ].map((inv, idx) => (
-                 <motion.div 
-                   key={idx}
-                   initial={{ opacity: 0, y: 100, rotateX: 20 }}
-                   whileInView={{ opacity: 1, y: idx * 50 - 50, rotateX: 0, zIndex: 10 - idx }}
-                   viewport={{ once: true, margin: "-100px" }}
-                   transition={{ duration: 0.6, delay: inv.delay, type: "spring" }}
-                   className="absolute w-[90%] md:w-[500px] bg-[#111] border border-gray-800 rounded-2xl p-6 shadow-[0_30px_50px_rgba(0,0,0,0.8)] flex flex-col gap-4"
-                   style={{ transformOrigin: "bottom center" }}
-                 >
-                    <div className="flex justify-between items-center border-b border-gray-800 pb-4">
-                       <div className="flex items-center gap-3">
-                         <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center"><User className="w-5 h-5 text-gray-500" /></div>
-                         <div>
-                           <div className="text-sm font-bold text-white">{inv.client}</div>
-                           <div className="text-xs text-gray-500">Due {inv.date}</div>
-                         </div>
-                       </div>
-                       <div className={`text-[10px] font-bold px-3 py-1 rounded-full tracking-wider ${
-                         inv.status === 'PAID' ? 'bg-emerald-500/20 text-emerald-400' :
-                         inv.status === 'VIEWED' ? 'bg-blue-500/20 text-blue-400' : 'bg-red-500/20 text-red-400'
-                       }`}>
-                         {inv.status}
-                       </div>
-                    </div>
-                    <div className="flex justify-between items-end">
-                      <span className="text-gray-500 text-sm">Total Amount</span>
-                      <span className="text-3xl font-serif text-white">{inv.amount}</span>
-                    </div>
-                 </motion.div>
-               ))}
-            </div>
-          </section>
-
-          {/* 2. Automations */}
-          <section id="section-automations" className="w-full min-h-[60vh] flex flex-col justify-center border-t border-gray-800 pt-16">
-            <h2 className="text-4xl font-bold mb-4">Behavioral Automations</h2>
-            <p className="text-gray-400 mb-12 max-w-xl">Set up cadences that automatically follow up on unpaid invoices politely and firmly.</p>
-            
-            <div className="w-full bg-[#0a0a0a] border border-gray-800 rounded-3xl p-8 relative overflow-hidden flex flex-col gap-6 shadow-[0_0_40px_rgba(249,115,22,0.05)]">
-               {/* Workflow nodes */}
-               {[
-                 { icon: <Mail className="w-5 h-5"/>, color: "text-blue-500", bg: "bg-blue-500/20", title: "Day 0: Invoice Sent", desc: "Initial professional email with payment link." },
-                 { icon: <Clock className="w-5 h-5"/>, color: "text-orange-500", bg: "bg-orange-500/20", title: "Day 3: Friendly Reminder", desc: "Automated nudge before the due date." },
-                 { icon: <AlertCircle className="w-5 h-5"/>, color: "text-red-500", bg: "bg-red-500/20", title: "Day 7: Firm Follow-up", desc: "Escalated wording requiring immediate action." }
-               ].map((node, i) => (
-                 <motion.div 
-                   key={i}
-                   initial={{ opacity: 0, x: -30 }}
-                   whileInView={{ opacity: 1, x: 0 }}
-                   viewport={{ once: true, margin: "-100px" }}
-                   transition={{ duration: 0.5, delay: i * 0.3 }}
-                   className="flex items-start gap-4 relative z-10"
-                 >
-                   {i !== 2 && <div className="absolute left-6 top-12 w-px h-20 bg-gray-800">
-                      <motion.div 
-                        initial={{ height: 0 }} 
-                        whileInView={{ height: "100%" }} 
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: i * 0.3 + 0.3 }}
-                        className="w-full bg-orange-500" 
-                      />
-                   </div>}
-                   <div className={`w-12 h-12 rounded-full ${node.bg} ${node.color} flex items-center justify-center shrink-0 border border-[#111]`}>
-                     {node.icon}
-                   </div>
-                   <div className="bg-[#111] border border-gray-800 p-5 rounded-2xl flex-1 shadow-lg">
-                     <h4 className="text-white font-bold mb-1">{node.title}</h4>
-                     <p className="text-sm text-gray-400">{node.desc}</p>
-                   </div>
-                 </motion.div>
-               ))}
-            </div>
-          </section>
-
-          {/* 3. Client Roster & Feedback */}
-          <section id="section-clients" className="w-full min-h-[60vh] flex flex-col justify-center border-t border-gray-800 pt-16">
-            <h2 className="text-4xl font-bold mb-4">Client Roster</h2>
-            <p className="text-gray-400 mb-12 max-w-xl">Track every client's payment history, and see why top agencies trust Collectly.</p>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                className="bg-[#0a0a0a] border border-gray-800 rounded-3xl p-8 flex flex-col shadow-xl relative overflow-hidden"
-              >
-                 <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 blur-[50px] rounded-full"></div>
-                 <div className="text-orange-500 mb-6 flex gap-1 relative z-10">
-                   <Star className="w-5 h-5 fill-current" /><Star className="w-5 h-5 fill-current" /><Star className="w-5 h-5 fill-current" /><Star className="w-5 h-5 fill-current" /><Star className="w-5 h-5 fill-current" />
-                 </div>
-                 <p className="text-lg text-white font-serif italic mb-6 flex-1 relative z-10">
-                   "Your client's overdue payments handled automatically, giving you back 10+ hours a week and improving cash flow without burning bridges."
-                 </p>
-                 <div className="flex items-center gap-4 relative z-10">
-                   <div className="w-12 h-12 bg-orange-500/20 rounded-full overflow-hidden flex items-center justify-center border border-orange-500/50">
-                     <AlertCircle className="w-6 h-6 text-orange-500" />
-                   </div>
-                   <div>
-                     <div className="font-bold text-white">Focus on the Work</div>
-                     <div className="text-xs text-gray-500">We'll handle the follow-ups</div>
-                   </div>
-                 </div>
-              </motion.div>
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="bg-[#0a0a0a] border border-gray-800 rounded-3xl p-6 flex flex-col gap-4 overflow-hidden shadow-xl"
-              >
-                 <div className="text-xs font-bold text-gray-500 mb-2 tracking-widest">RECENT CLIENTS</div>
-                 {[1,2,3].map((i, idx) => (
-                   <motion.div 
-                     key={i} 
-                     initial={{ x: 20, opacity: 0 }}
-                     whileInView={{ x: 0, opacity: 1 }}
-                     transition={{ delay: 0.3 + (idx * 0.1) }}
-                     className="flex items-center justify-between p-3 bg-[#111] rounded-xl border border-gray-800/50"
-                   >
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center"><User className="w-4 h-4 text-gray-500"/></div>
-                        <div className="w-24 h-3 bg-gray-700 rounded"></div>
-                      </div>
-                      <div className="w-16 h-4 bg-emerald-500/20 rounded border border-emerald-500/30"></div>
-                   </motion.div>
-                 ))}
-              </motion.div>
-            </div>
-          </section>
-
-          {/* 4. Payments Recovered */}
-          <section id="section-payments" className="w-full min-h-[60vh] flex flex-col justify-center border-t border-gray-800 pt-16">
-            <h2 className="text-4xl font-bold mb-4">Maximum Recovery</h2>
-            <p className="text-gray-400 mb-12 max-w-xl">We analyze your outstanding details and deploy strategies that get you paid. Watch your recovered revenue grow.</p>
-            
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="w-full bg-[#0a0a0a] border border-gray-800 rounded-3xl p-10 flex flex-col items-center text-center relative overflow-hidden shadow-[0_0_50px_rgba(16,185,129,0.05)]"
-            >
-               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[300px] bg-emerald-500/10 blur-[100px] rounded-full pointer-events-none"></div>
-               
-               <div className="text-emerald-400 font-bold tracking-widest text-xs mb-6 flex items-center gap-2 relative z-10 bg-emerald-500/10 px-4 py-2 rounded-full border border-emerald-500/20">
-                 <TrendingUp className="w-4 h-4" /> EXAMPLE RECOVERY METRIC
-               </div>
-               
-               <div className="text-5xl md:text-[80px] font-serif font-bold text-white mb-12 relative z-10 tracking-tight">
-                 Dashboard <span className="text-emerald-500">Preview</span>
-               </div>
-               
-               <div className="w-full max-w-lg h-40 flex items-end gap-3 justify-center relative z-10 border-b border-gray-800 pb-1">
-                  {[40, 60, 45, 80, 55, 90, 100].map((h, i) => (
-                    <motion.div 
-                      key={i}
-                      initial={{ height: 0 }}
-                      whileInView={{ height: `${h}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.8, delay: i * 0.1, type: "spring" }}
-                      className="w-12 bg-gradient-to-t from-emerald-900/30 to-emerald-500 rounded-t-md border-t border-emerald-400"
-                    ></motion.div>
-                  ))}
-               </div>
-            </motion.div>
-          </section>
-
-          {/* 5. Reports & CTA */}
-          <section id="section-reports" className="w-full flex flex-col justify-center border-t border-gray-800 pt-16 mb-20">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="w-full bg-gradient-to-br from-orange-600 to-orange-900 rounded-3xl p-12 md:p-20 text-center relative overflow-hidden shadow-[0_0_60px_rgba(249,115,22,0.3)]"
-            >
-              {/* Fake texture overlay */}
-              <div className="absolute inset-0 bg-black/10 mix-blend-overlay"></div>
-              
-              <h2 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6 relative z-10 leading-tight">Stop leaving money<br/>on the table.</h2>
-              <p className="text-orange-100 mb-10 max-w-xl mx-auto relative z-10 text-lg">Join thousands of agencies recovering their cash flow on autopilot with Collectly.</p>
-              
-              <Link href="/login" className="relative z-10 inline-flex items-center gap-2 bg-white text-orange-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-colors shadow-2xl hover:scale-105 active:scale-95 transform duration-200">
-                Start Your Free Trial <ArrowRight className="w-5 h-5" />
+        {/* SECTION 2: AUTOMATIONS */}
+        <section id="section-automations" className="w-full max-w-5xl px-6 py-20 border-t-2 border-[#0A0A0A]">
+          <div className="bg-[#DEDEC8] border-2 border-[#0A0A0A] rounded-[24px] p-8 sm:p-12 shadow-[8px_8px_0px_#0A0A0A] flex flex-col md:flex-row items-center gap-10">
+            <div className="flex-1">
+              <span className="font-label text-xs uppercase tracking-widest font-bold px-3 py-1 bg-white border border-[#0A0A0A] rounded-full shadow-[2px_2px_0px_#0A0A0A] inline-block mb-3">
+                AUTONOMOUS CADENCE
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-display uppercase tracking-tight text-[#0A0A0A] mb-4">
+                DETERMINISTIC LOGIC RELAYS
+              </h2>
+              <p className="text-sm text-[#0A0A0A]/80 font-sans leading-relaxed mb-6">
+                Never lose an invoice or miss a project milestone. Configure background triggers that automatically escalate urgent deadlines and dispatch polite reminder schedules.
+              </p>
+              <Link href="/dashboard/automations">
+                <button className="px-6 py-2.5 bg-[#0A0A0A] text-white rounded-full font-label text-xs uppercase tracking-wider font-bold border-2 border-[#0A0A0A] shadow-[3px_3px_0px_#0A0A0A] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all">
+                  VIEW ALL WORKFLOW RULES
+                </button>
               </Link>
-            </motion.div>
-          </section>
+            </div>
 
-        </div>
+            <div className="w-full md:w-80 flex flex-col gap-3 font-mono text-xs">
+              <div className="bg-white border-2 border-[#0A0A0A] p-4 rounded-[16px] shadow-[3px_3px_0px_#0A0A0A]">
+                <div className="font-label font-bold text-[10px] uppercase text-[#0A0A0A]/60">CADENCE // DAY 0</div>
+                <div className="font-bold text-[#0A0A0A] mt-1">Invoice Dispatched</div>
+                <div className="text-[11px] text-[#0A0A0A]/70">Initial telemetry & payment link sent.</div>
+              </div>
+
+              <div className="bg-white border-2 border-[#0A0A0A] p-4 rounded-[16px] shadow-[3px_3px_0px_#0A0A0A]">
+                <div className="font-label font-bold text-[10px] uppercase text-[#0A0A0A]/60">CADENCE // DAY 3</div>
+                <div className="font-bold text-[#0A0A0A] mt-1">Friendly Milestone Nudge</div>
+                <div className="text-[11px] text-[#0A0A0A]/70">Polite automated notification.</div>
+              </div>
+
+              <div className="bg-[#0A0A0A] text-white border-2 border-[#0A0A0A] p-4 rounded-[16px] shadow-[3px_3px_0px_#0A0A0A]">
+                <div className="font-label font-bold text-[10px] uppercase text-white/60">CADENCE // DAY 7</div>
+                <div className="font-bold text-white mt-1">Direct Priority Follow-up</div>
+                <div className="text-[11px] text-white/70">Escalated wording requiring action.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 3: TELEMETRY & RECOVERY */}
+        <section id="section-telemetry" className="w-full max-w-5xl px-6 py-20 border-t-2 border-[#0A0A0A]">
+          <div className="text-center mb-16">
+            <span className="font-label text-xs uppercase tracking-widest font-bold px-3 py-1 bg-white border-2 border-[#0A0A0A] rounded-full shadow-[2px_2px_0px_#0A0A0A] inline-block mb-3">
+              REVENUE RECOVERY
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-display uppercase tracking-tight text-[#0A0A0A]">
+              TELEMETRY THAT PAYS FOR ITSELF
+            </h2>
+          </div>
+
+          <div className="bg-white border-2 border-[#0A0A0A] rounded-[24px] p-8 sm:p-12 shadow-[8px_8px_0px_#0A0A0A] flex flex-col items-center text-center">
+            <div className="font-label text-xs uppercase tracking-widest font-bold text-[#0A0A0A] mb-2">
+              HISTORICAL SETTLEMENT INDEX
+            </div>
+            <div className="font-display text-5xl sm:text-7xl text-[#0A0A0A] mb-8">
+              $1,420,000+
+            </div>
+
+            {/* Vintage Monochrome Chart */}
+            <div className="w-full max-w-xl h-36 flex items-end justify-between gap-3 border-b-2 border-[#0A0A0A] pb-2 mb-6">
+              {[35, 50, 42, 70, 60, 85, 95].map((h, i) => (
+                <div key={i} className="flex-1 flex flex-col justify-end h-full group">
+                  <div 
+                    style={{ height: `${h}%` }}
+                    className="w-full bg-[#0A0A0A] border-2 border-[#0A0A0A] rounded-t-sm group-hover:bg-[#333] transition-colors"
+                  ></div>
+                  <span className="font-label text-[10px] font-bold text-[#0A0A0A] mt-2 text-center">
+                    WK 0{i + 1}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-xs sm:text-sm text-[#0A0A0A]/70 max-w-md font-sans">
+              Recovered from overdue retainers and delayed deliverables using automated behavioral follow-ups.
+            </p>
+          </div>
+        </section>
+
+        {/* SECTION 4: FINAL DISPATCH CTA */}
+        <section id="section-dispatch" className="w-full max-w-5xl px-6 py-20 border-t-2 border-[#0A0A0A]">
+          <div className="w-full bg-[#0A0A0A] text-white border-3 border-[#0A0A0A] rounded-[28px] p-10 sm:p-16 text-center relative overflow-hidden shadow-[10px_10px_0px_#0A0A0A]">
+            
+            {/* Tiny white star dots inside black blob */}
+            <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px] opacity-15 pointer-events-none"></div>
+
+            <div className="relative z-10 max-w-2xl mx-auto flex flex-col items-center">
+              <SpiralLogo className="w-12 h-12 text-white mb-6 animate-spin transition-transform duration-10000" />
+              
+              <h2 className="text-3xl sm:text-5xl font-display uppercase tracking-tight text-white mb-4 leading-tight">
+                STOP LEAVING MONEY<br />IN DEEP SPACE
+              </h2>
+              
+              <p className="text-sm sm:text-base text-white/80 font-sans mb-8 leading-relaxed">
+                Join forward-thinking agencies and creators running autonomous operations with Collectly 2.0.
+              </p>
+
+              <Link href="/dashboard/capture">
+                <button className="px-8 py-4 bg-white text-[#0A0A0A] rounded-full font-label text-sm uppercase tracking-wider font-black border-2 border-white shadow-[4px_4px_0px_rgba(255,255,255,0.4)] hover:bg-[#DEDEC8] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
+                  ENTER WORKSPACE NOW
+                </button>
+              </Link>
+            </div>
+          </div>
+        </section>
+
       </main>
 
       {/* FOOTER */}
-      <footer className="w-full bg-[#050505] border-t border-gray-900 py-12 text-white z-20 relative">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+      <footer className="w-full bg-[#DEDEC8] border-t-2 border-[#0A0A0A] py-12 px-6 z-20 relative text-[#0A0A0A]">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center shadow-[0_0_15px_rgba(249,115,22,0.3)]">
-              <img src="/logo.jpg" alt="Collectly Logo" className="w-full h-full object-cover" />
-            </div>
-            <span className="font-bold text-lg tracking-tight font-serif">Collectly</span>
+            <SpiralLogo className="w-7 h-7 text-[#0A0A0A]" />
+            <span className="font-display text-sm tracking-tight uppercase text-[#0A0A0A]">COLLECTLY 2.0</span>
+            <span className="font-label text-xs uppercase tracking-wider text-[#0A0A0A]/60">RETRO SPACE ZINE EDITION</span>
           </div>
-          <div className="flex gap-8 text-[12px] font-medium text-gray-500">
-            <a href="mailto:support@collectly.app" className="hover:text-white transition-colors">Support</a>
-            <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+
+          <div className="flex gap-6 font-label text-xs uppercase tracking-wider font-bold text-[#0A0A0A]/70">
+            <Link href="/dashboard/capture" className="hover:text-[#0A0A0A] transition-colors">Workspace</Link>
+            <Link href="/dashboard/invoices" className="hover:text-[#0A0A0A] transition-colors">Invoices</Link>
+            <Link href="/dashboard/tasks" className="hover:text-[#0A0A0A] transition-colors">Tasks</Link>
+            <a href="mailto:support@collectly.app" className="hover:text-[#0A0A0A] transition-colors">Support</a>
           </div>
         </div>
       </footer>
+
     </div>
   );
 }

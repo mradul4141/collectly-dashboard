@@ -21,9 +21,9 @@ export default function DocumentsPage() {
       id: "doc-2",
       user_id: "demo",
       project_id: "proj-2",
-      title: "YouTube Video Production Outline",
+      title: "Space Log & Product Transmission Outline",
       category: "draft",
-      content: "Script outline for Collectly 2.0 announcement video: 1. The problem with scattered notes. 2. AI capture with human review. 3. Real-time Kanban board walkthrough.",
+      content: "Transmission outline for Collectly 2.0 announcement:\n1. The problem with scattered notes and lost invoices.\n2. AI capture with human review gates.\n3. Real-time orbital Kanban mission board.",
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
     }
@@ -59,7 +59,7 @@ export default function DocumentsPage() {
     const newDoc: DocumentItem = {
       id: `doc-${Date.now()}`,
       user_id: "demo",
-      title: "Untitled Note",
+      title: "Untitled Field Log",
       category: "general",
       content: "",
       created_at: new Date().toISOString(),
@@ -87,42 +87,44 @@ export default function DocumentsPage() {
   );
 
   return (
-    <div className="max-w-[1400px] mx-auto space-y-6 animate-fade-in">
+    <div className="max-w-[1400px] mx-auto space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-800 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-[#0A0A0A] pb-5">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-indigo-400 bg-indigo-500/10 px-2.5 py-0.5 rounded-md border border-indigo-500/20">
-              Knowledge Hub
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="font-label text-[10px] font-bold uppercase tracking-widest text-[#0A0A0A] bg-[#DEDEC8] px-2.5 py-0.5 rounded-full border border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]">
+              ARCHIVE // KNOWLEDGE REPOSITORY
             </span>
           </div>
-          <h1 className="text-3xl font-serif font-bold text-white tracking-tight">Documents & Notes</h1>
-          <p className="text-sm text-gray-400 mt-1">
-            Store project briefs, meeting notes, and convert them to tasks with one click.
+          <h1 className="font-display text-2xl sm:text-3xl text-[#0A0A0A] tracking-tight uppercase">
+            DOCUMENTS & FLIGHT LOGS
+          </h1>
+          <p className="text-xs sm:text-sm text-[#0A0A0A]/70 mt-1 font-sans">
+            Store mission briefs, meeting transcripts, and decode actionable tasks with AI assistance.
           </p>
         </div>
 
         <button
           onClick={handleCreateNewDoc}
-          className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all shadow-lg shadow-indigo-600/20 self-start sm:self-auto cursor-pointer"
+          className="flex items-center gap-2 px-4 py-2 bg-[#0A0A0A] hover:bg-[#1a1a1a] text-white rounded-full font-label text-xs uppercase tracking-wider font-bold transition-all border-2 border-[#0A0A0A] shadow-[3px_3px_0px_#0A0A0A] hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0px_#0A0A0A] cursor-pointer self-start sm:self-auto"
         >
           <Plus className="w-3.5 h-3.5" />
-          New Document
+          NEW FIELD LOG
         </button>
       </div>
 
       {/* Editor & List Split View */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 min-h-[600px]">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 min-h-[620px]">
         {/* Left Column: Document List */}
-        <div className="md:col-span-4 bg-[#111114] border border-gray-800 rounded-2xl p-4 flex flex-col gap-3">
+        <div className="md:col-span-4 bg-white border-2 border-[#0A0A0A] rounded-[22px] p-4 flex flex-col gap-3 shadow-[5px_5px_0px_#0A0A0A]">
           <div className="relative">
-            <Search className="w-4 h-4 absolute left-3 top-2.5 text-gray-500" />
+            <Search className="w-4 h-4 absolute left-3 top-2.5 text-[#0A0A0A]/50" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search notes..."
-              className="w-full bg-[#0a0a0c] border border-gray-800 rounded-xl pl-9 pr-3 py-1.5 text-xs text-gray-200 placeholder-gray-500 focus:outline-none focus:border-indigo-500"
+              placeholder="SEARCH ARCHIVE..."
+              className="w-full bg-[#DEDEC8] border-2 border-[#0A0A0A] rounded-full pl-9 pr-3 py-1.5 text-xs text-[#0A0A0A] placeholder-[#0A0A0A]/50 font-label tracking-wider uppercase focus:outline-none focus:bg-white transition-colors"
             />
           </div>
 
@@ -131,19 +133,21 @@ export default function DocumentsPage() {
               <div
                 key={doc.id}
                 onClick={() => setActiveDoc(doc)}
-                className={`p-3.5 rounded-xl border transition-all cursor-pointer ${
+                className={`p-3.5 rounded-[16px] border-2 transition-all cursor-pointer ${
                   activeDoc.id === doc.id
-                    ? "bg-[#18181d] border-indigo-500/60 shadow-sm"
-                    : "bg-[#0d0d10] hover:bg-[#141418] border-gray-900"
+                    ? "bg-[#DEDEC8] border-[#0A0A0A] shadow-[3px_3px_0px_#0A0A0A]"
+                    : "bg-white hover:bg-neutral-50 border-[#0A0A0A]/20"
                 }`}
               >
                 <div className="flex items-start justify-between gap-2 mb-1">
-                  <span className="text-xs font-bold text-white line-clamp-1">{doc.title}</span>
-                  <span className="text-[9px] font-bold text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded border border-indigo-500/20 uppercase">
+                  <span className="font-label text-xs font-bold text-[#0A0A0A] uppercase tracking-wide line-clamp-1">
+                    {doc.title}
+                  </span>
+                  <span className="font-label text-[9px] font-bold text-[#0A0A0A] bg-white px-1.5 py-0.5 rounded border border-[#0A0A0A] uppercase tracking-wider">
                     {doc.category}
                   </span>
                 </div>
-                <p className="text-[11px] text-gray-400 line-clamp-2 leading-relaxed">
+                <p className="text-[11px] text-[#0A0A0A]/70 line-clamp-2 leading-relaxed font-sans">
                   {doc.content || "Empty document..."}
                 </p>
               </div>
@@ -152,31 +156,31 @@ export default function DocumentsPage() {
         </div>
 
         {/* Right Column: Note Editor */}
-        <div className="md:col-span-8 bg-[#111114] border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
+        <div className="md:col-span-8 bg-white border-2 border-[#0A0A0A] rounded-[22px] p-6 flex flex-col justify-between shadow-[6px_6px_0px_#0A0A0A]">
           <div className="space-y-4">
-            <div className="flex items-center justify-between border-b border-gray-800 pb-4">
+            <div className="flex items-center justify-between border-b-2 border-[#0A0A0A] pb-4">
               <input
                 type="text"
                 value={activeDoc.title}
                 onChange={(e) => updateActiveTitle(e.target.value)}
-                placeholder="Document title..."
-                className="text-xl font-bold font-serif text-white bg-transparent focus:outline-none flex-1"
+                placeholder="FIELD LOG TITLE..."
+                className="text-lg sm:text-xl font-display uppercase tracking-wide text-[#0A0A0A] bg-transparent focus:outline-none flex-1 mr-4"
               />
 
               <button
                 onClick={handleExtractFromDoc}
                 disabled={isExtracting || !activeDoc.content.trim()}
-                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 disabled:opacity-40 text-white font-semibold text-xs shadow-md shadow-indigo-600/20 transition-all cursor-pointer"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#0A0A0A] hover:bg-[#222] disabled:opacity-40 text-white font-label text-xs uppercase tracking-wider font-bold shadow-[3px_3px_0px_#0A0A0A] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all cursor-pointer"
               >
                 {isExtracting ? (
                   <>
                     <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    Extracting...
+                    DECODING...
                   </>
                 ) : (
                   <>
-                    <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                    Extract to Tasks
+                    <Sparkles className="w-3.5 h-3.5" />
+                    EXTRACT TO TASKS
                   </>
                 )}
               </button>
@@ -186,15 +190,15 @@ export default function DocumentsPage() {
               rows={16}
               value={activeDoc.content}
               onChange={(e) => updateActiveContent(e.target.value)}
-              placeholder="Write meeting notes, project briefs, or dump text here..."
-              className="w-full bg-transparent text-sm text-gray-200 placeholder-gray-600 focus:outline-none resize-none leading-relaxed"
+              placeholder="Record mission parameters, meeting discussions, or paste raw intelligence payload here..."
+              className="w-full bg-transparent text-sm text-[#0A0A0A] placeholder-[#0A0A0A]/40 focus:outline-none resize-none leading-relaxed font-mono"
             />
           </div>
 
-          <div className="pt-4 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-500">
-            <span>Last modified: {new Date(activeDoc.updated_at).toLocaleTimeString()}</span>
-            <span className="flex items-center gap-1 text-indigo-400">
-              <FileText className="w-3.5 h-3.5" /> Markdown ready
+          <div className="pt-4 border-t-2 border-[#0A0A0A]/10 flex items-center justify-between text-xs font-label uppercase tracking-wider text-[#0A0A0A]/70">
+            <span>LAST TRANSMISSION: {new Date(activeDoc.updated_at).toLocaleTimeString()}</span>
+            <span className="flex items-center gap-1 text-[#0A0A0A] font-bold">
+              <FileText className="w-3.5 h-3.5" /> MARKDOWN // READY
             </span>
           </div>
         </div>
@@ -207,7 +211,7 @@ export default function DocumentsPage() {
           mode={reviewData.mode}
           onClose={() => setReviewData(null)}
           onApprove={(approved) => {
-            alert(`Approved and added ${approved.length} task(s) from "${activeDoc.title}" to your workspace!`);
+            alert(`Approved and added ${approved.length} mission task(s) from "${activeDoc.title}" to your workspace!`);
             setReviewData(null);
           }}
         />
