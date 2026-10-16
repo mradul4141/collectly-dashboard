@@ -222,13 +222,13 @@ export function WorkspaceBoard() {
 
       {/* 2. Kanban Board View */}
       {activeTab === "kanban" && (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 overflow-x-auto pb-4">
+        <div className="flex md:grid flex-nowrap md:grid-cols-4 gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-none">
           {columns.map((col) => {
             const colTasks = filteredTasks.filter(t => t.status === col.id);
             return (
               <div
                 key={col.id}
-                className="bg-[#FFFFFF] border-2 border-[#0A0A0A] rounded-[22px] p-4 flex flex-col min-h-[500px] shadow-[4px_4px_0px_#0A0A0A]"
+                className="bg-[#FFFFFF] border-2 border-[#0A0A0A] rounded-[22px] p-4 flex flex-col min-h-[500px] min-w-[280px] md:min-w-0 flex-1 snap-start shadow-[4px_4px_0px_#0A0A0A]"
               >
                 {/* Column Header */}
                 <div className="flex items-center justify-between pb-3 mb-3 border-b-2 border-[#0A0A0A]">

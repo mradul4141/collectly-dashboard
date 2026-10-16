@@ -14,14 +14,20 @@ import {
   Users,
   Calculator,
   Compass,
-  Radio
+  Radio,
+  X
 } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 import { SpiralLogo } from "@/components/illustrations/retro-space";
 
-export function Sidebar() {
+interface SidebarProps {
+  onClose?: () => void;
+  className?: string;
+}
+
+export function Sidebar({ onClose, className = "" }: SidebarProps) {
   const [userEmail, setUserEmail] = useState<string>("cosmonaut@collectly.app");
-  const [showFinanceTools, setShowFinanceTools] = useState<boolean>(false);
+  const [showFinanceTools, setShowFinanceTools] = useState<boolean>(true);
   const supabase = createClient();
 
   useEffect(() => {
@@ -39,12 +45,16 @@ export function Sidebar() {
     window.location.href = "/login";
   };
 
+  const handleLinkClick = () => {
+    if (onClose) onClose();
+  };
+
   return (
-    <aside className="w-64 flex-shrink-0 flex flex-col justify-between h-full p-4 bg-[#DEDEC8] border-r-2 border-[#0A0A0A] overflow-y-auto">
+    <aside className={`w-64 flex-shrink-0 flex flex-col justify-between h-full p-4 bg-[#DEDEC8] border-r-2 border-[#0A0A0A] overflow-y-auto ${className}`}>
       <div>
         {/* Brand Header — Retro Spiral Mark + Chunky Typography */}
         <div className="flex items-center justify-between px-2 py-2 mb-6 border-b-2 border-[#0A0A0A] pb-4">
-          <Link href="/dashboard" className="flex items-center gap-2.5 group">
+          <Link href="/dashboard" onClick={handleLinkClick} className="flex items-center gap-2.5 group">
             <div className="transition-transform group-hover:rotate-45 duration-300">
               <SpiralLogo className="w-8 h-8" />
             </div>
@@ -57,7 +67,19 @@ export function Sidebar() {
               </span>
             </div>
           </Link>
-          <span className="w-2.5 h-2.5 rounded-full bg-[#0A0A0A] animate-ping" title="Orbit Active" />
+          
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#0A0A0A] animate-ping" title="Orbit Active" />
+            {onClose && (
+              <button 
+                onClick={onClose}
+                className="md:hidden p-1 rounded-lg bg-white border border-[#0A0A0A] text-[#0A0A0A] hover:bg-neutral-100"
+                aria-label="Close menu"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Core Workspace Navigation */}
@@ -68,6 +90,7 @@ export function Sidebar() {
 
           <Link 
             href="/dashboard" 
+            onClick={handleLinkClick}
             className="flex items-center gap-3 px-3 py-2 rounded-xl bg-[#0A0A0A] text-[#FFFFFF] font-label text-xs sticker-shadow-lift"
           >
             <Compass className="w-4 h-4 text-[#FFFFFF]" />
@@ -76,6 +99,7 @@ export function Sidebar() {
 
           <Link 
             href="/dashboard/capture" 
+            onClick={handleLinkClick}
             className="flex items-center justify-between px-3 py-2 rounded-xl bg-[#FFFFFF] border-2 border-[#0A0A0A] text-[#0A0A0A] font-label text-xs sticker-shadow-lift hover:bg-[#F4F4F0]"
           >
             <div className="flex items-center gap-2.5">
@@ -89,6 +113,7 @@ export function Sidebar() {
 
           <Link 
             href="/dashboard/tasks" 
+            onClick={handleLinkClick}
             className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-[#FFFFFF] border-2 border-[#0A0A0A] text-[#0A0A0A] font-label text-xs sticker-shadow-lift hover:bg-[#F4F4F0]"
           >
             <CheckSquare className="w-4 h-4 text-[#0A0A0A]" />
@@ -97,6 +122,7 @@ export function Sidebar() {
 
           <Link 
             href="/dashboard/projects" 
+            onClick={handleLinkClick}
             className="flex items-center justify-between px-3 py-2 rounded-xl bg-[#FFFFFF] border-2 border-[#0A0A0A] text-[#0A0A0A] font-label text-xs sticker-shadow-lift hover:bg-[#F4F4F0]"
           >
             <div className="flex items-center gap-2.5">
@@ -110,6 +136,7 @@ export function Sidebar() {
 
           <Link 
             href="/dashboard/documents" 
+            onClick={handleLinkClick}
             className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-[#FFFFFF] border-2 border-[#0A0A0A] text-[#0A0A0A] font-label text-xs sticker-shadow-lift hover:bg-[#F4F4F0]"
           >
             <FileText className="w-4 h-4 text-[#0A0A0A]" />
@@ -118,6 +145,7 @@ export function Sidebar() {
 
           <Link 
             href="/dashboard/automations" 
+            onClick={handleLinkClick}
             className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-[#FFFFFF] border-2 border-[#0A0A0A] text-[#0A0A0A] font-label text-xs sticker-shadow-lift hover:bg-[#F4F4F0]"
           >
             <Zap className="w-4 h-4 text-[#0A0A0A]" />
@@ -136,16 +164,32 @@ export function Sidebar() {
 
             {showFinanceTools && (
               <div className="flex flex-col gap-1 mt-1 pl-2 border-l-2 border-[#0A0A0A]">
-                <Link href="/dashboard/invoices" className="px-2.5 py-1.5 rounded-lg text-[#0A0A0A] hover:bg-[#FFFFFF] font-label text-[11px] transition-colors">
+                <Link 
+                  href="/dashboard/invoices" 
+                  onClick={handleLinkClick}
+                  className="px-2.5 py-1.5 rounded-lg text-[#0A0A0A] hover:bg-[#FFFFFF] font-label text-[11px] transition-colors"
+                >
                   • INVOICE LEDGER
                 </Link>
-                <Link href="/dashboard/clients" className="px-2.5 py-1.5 rounded-lg text-[#0A0A0A] hover:bg-[#FFFFFF] font-label text-[11px] transition-colors">
+                <Link 
+                  href="/dashboard/clients" 
+                  onClick={handleLinkClick}
+                  className="px-2.5 py-1.5 rounded-lg text-[#0A0A0A] hover:bg-[#FFFFFF] font-label text-[11px] transition-colors"
+                >
                   • CLIENT DOSSIERS
                 </Link>
-                <Link href="/dashboard/review-queue" className="px-2.5 py-1.5 rounded-lg text-[#0A0A0A] hover:bg-[#FFFFFF] font-label text-[11px] transition-colors">
+                <Link 
+                  href="/dashboard/review-queue" 
+                  onClick={handleLinkClick}
+                  className="px-2.5 py-1.5 rounded-lg text-[#0A0A0A] hover:bg-[#FFFFFF] font-label text-[11px] transition-colors"
+                >
                   • REVIEW QUEUE
                 </Link>
-                <Link href="/dashboard/taxes" className="px-2.5 py-1.5 rounded-lg text-[#0A0A0A] hover:bg-[#FFFFFF] font-label text-[11px] transition-colors">
+                <Link 
+                  href="/dashboard/taxes" 
+                  onClick={handleLinkClick}
+                  className="px-2.5 py-1.5 rounded-lg text-[#0A0A0A] hover:bg-[#FFFFFF] font-label text-[11px] transition-colors"
+                >
                   • MSME 43B COMPLIANCE
                 </Link>
               </div>

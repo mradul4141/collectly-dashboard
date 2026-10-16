@@ -1,53 +1,57 @@
 "use client";
 
-import { Search, Compass, Sparkles, Radio, Timer } from "lucide-react";
-import { TelescopeIllustration } from "@/components/illustrations/retro-space";
+import { Search, Compass, Menu, Timer } from "lucide-react";
 
-export function Topbar() {
+interface TopbarProps {
+  onOpenMobileMenu?: () => void;
+}
+
+export function Topbar({ onOpenMobileMenu }: TopbarProps) {
   return (
-    <header className="bg-[#DEDEC8] border-b-2 border-[#0A0A0A] px-6 py-3.5 z-10 sticky top-0 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-      {/* Left: Astronaut Mission Status */}
-      <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-xl bg-[#0A0A0A] border-2 border-[#0A0A0A] flex items-center justify-center text-[#FFFFFF] sticker-shadow-sm flex-shrink-0">
-          <Compass className="w-5 h-5" />
+    <header className="bg-[#DEDEC8] border-b-2 border-[#0A0A0A] px-4 sm:px-6 py-3 z-10 sticky top-0 flex items-center justify-between gap-3">
+      {/* Left: Mobile Menu Toggle + Station Badge */}
+      <div className="flex items-center gap-2.5">
+        {onOpenMobileMenu && (
+          <button
+            onClick={onOpenMobileMenu}
+            className="md:hidden p-2 rounded-xl bg-white border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] active:translate-x-0 active:translate-y-0 text-[#0A0A0A]"
+            aria-label="Open mission menu"
+          >
+            <Menu className="w-4 h-4" />
+          </button>
+        )}
+
+        <div className="w-8 h-8 rounded-xl bg-[#0A0A0A] border-2 border-[#0A0A0A] flex items-center justify-center text-[#FFFFFF] shadow-[2px_2px_0px_#0A0A0A] flex-shrink-0">
+          <Compass className="w-4 h-4" />
         </div>
+
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="font-display text-xs text-[#0A0A0A] tracking-wider uppercase">
-              ORBITAL STATION // 01
+          <div className="flex items-center gap-1.5">
+            <h1 className="font-display text-[11px] sm:text-xs text-[#0A0A0A] tracking-wider uppercase">
+              ORBITAL STATION
             </h1>
-            <span className="font-label text-[9px] bg-[#FFFFFF] border border-[#0A0A0A] px-1.5 py-0.2 rounded font-bold">
+            <span className="font-label text-[8px] sm:text-[9px] bg-[#FFFFFF] border border-[#0A0A0A] px-1.5 py-0.2 rounded font-bold">
               SYS OK
             </span>
           </div>
-          <span className="font-label text-[10px] text-[#555555]">
-            COLLECTLY AUTONOMOUS AR & WORKSPACE
+          <span className="font-label text-[9px] sm:text-[10px] text-[#555555] hidden sm:block">
+            COLLECTLY AUTONOMOUS WORKSPACE
           </span>
         </div>
       </div>
 
-      {/* Middle & Right: Zine Controls */}
-      <div className="flex flex-wrap items-center gap-3 w-full md:w-auto justify-between md:justify-end">
-        {/* Search Bar */}
-        <div className="relative w-full md:w-64">
-          <Search className="w-3.5 h-3.5 text-[#0A0A0A] absolute left-3 top-1/2 -translate-y-1/2" />
-          <input 
-            type="text" 
-            placeholder="SEARCH LOGS / TASKS..." 
-            className="w-full bg-[#FFFFFF] border-2 border-[#0A0A0A] rounded-xl py-1.5 pl-8 pr-3 font-mono text-[11px] text-[#0A0A0A] placeholder-[#888888] outline-none sticker-shadow-sm focus:shadow-[4px_4px_0px_#0A0A0A] transition-all"
-          />
-        </div>
-
+      {/* Right: Zine Controls */}
+      <div className="flex items-center gap-2 sm:gap-3">
         {/* Space Flight Timer Pill */}
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#FFFFFF] border-2 border-[#0A0A0A] sticker-shadow-sm">
+        <div className="hidden xs:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#FFFFFF] border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]">
           <Timer className="w-3.5 h-3.5 text-[#0A0A0A]" />
-          <span className="font-label text-[11px] text-[#555555]">T-PLUS:</span>
-          <span className="font-mono text-xs font-bold text-[#0A0A0A]">04:20:18</span>
+          <span className="font-label text-[10px] text-[#555555] hidden sm:inline">T+:</span>
+          <span className="font-mono text-[11px] sm:text-xs font-bold text-[#0A0A0A]">04:20:18</span>
         </div>
 
         {/* Mode Sticker */}
-        <span className="font-label text-[10px] px-2.5 py-1.5 rounded-xl bg-[#0A0A0A] text-[#FFFFFF] font-bold tracking-wider sticker-shadow-sm">
-          SPACE-ZINE ACTIVE
+        <span className="font-label text-[9px] sm:text-[10px] px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-xl bg-[#0A0A0A] text-[#FFFFFF] font-bold tracking-wider shadow-[2px_2px_0px_#0A0A0A] whitespace-nowrap">
+          ZINE V2.0
         </span>
       </div>
     </header>

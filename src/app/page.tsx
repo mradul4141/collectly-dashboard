@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { 
   User, Mail, Clock, AlertCircle, Star, TrendingUp, ArrowRight, 
-  Sparkles, ShieldCheck, Check, Send, FileText, Zap, Compass
+  Sparkles, ShieldCheck, Check, Send, FileText, Zap, Compass, Menu, X
 } from "lucide-react";
 import { 
   AstronautIllustration, 
@@ -19,6 +19,7 @@ import {
 export default function LandingPage() {
   const [activeTab, setActiveTab] = useState("Mission Control");
   const [activeNav, setActiveNav] = useState("Home");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const floatingVariants = {
     animate1: {
@@ -107,17 +108,17 @@ export default function LandingPage() {
       </motion.div>
 
       {/* FIXED TOP RETRO NAVBAR */}
-      <header className="fixed top-5 left-0 right-0 w-full flex items-center justify-between px-6 md:px-12 z-50 pointer-events-none">
+      <header className="fixed top-3 sm:top-5 left-0 right-0 w-full flex items-center justify-between px-4 sm:px-6 md:px-12 z-50 pointer-events-none">
         
         {/* LOGO BADGE */}
-        <div className="pointer-events-auto flex items-center gap-2.5 bg-white border-2 border-[#0A0A0A] px-4 py-2 rounded-full shadow-[4px_4px_0px_#0A0A0A] hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0px_#0A0A0A] transition-all">
-          <SpiralLogo className="w-6 h-6 text-[#0A0A0A]" />
-          <span className="font-display text-sm tracking-tight uppercase text-[#0A0A0A]">
-            COLLECTLY <span className="font-label text-xs tracking-widest text-[#0A0A0A]/60 font-bold ml-1">2.0</span>
+        <div className="pointer-events-auto flex items-center gap-2 sm:gap-2.5 bg-white border-2 border-[#0A0A0A] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-[3px_3px_0px_#0A0A0A] sm:shadow-[4px_4px_0px_#0A0A0A] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all">
+          <SpiralLogo className="w-5 h-5 sm:w-6 sm:h-6 text-[#0A0A0A]" />
+          <span className="font-display text-xs sm:text-sm tracking-tight uppercase text-[#0A0A0A]">
+            COLLECTLY <span className="font-label text-[10px] sm:text-xs tracking-widest text-[#0A0A0A]/60 font-bold ml-0.5">2.0</span>
           </span>
         </div>
 
-        {/* NAVIGATION PILLS */}
+        {/* NAVIGATION PILLS (DESKTOP) */}
         <nav className="hidden md:flex bg-white border-2 border-[#0A0A0A] rounded-full p-1 gap-1.5 shadow-[4px_4px_0px_#0A0A0A] pointer-events-auto">
           {navItems.map((item) => (
             <button
@@ -134,16 +135,54 @@ export default function LandingPage() {
           ))}
         </nav>
 
-        {/* CTA BUTTON */}
-        <div className="pointer-events-auto">
-          <Link href="/dashboard/capture">
-            <button className="flex items-center gap-2 px-5 py-2.5 bg-[#0A0A0A] text-white rounded-full font-label text-xs uppercase tracking-wider font-bold border-2 border-[#0A0A0A] shadow-[4px_4px_0px_#0A0A0A] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#0A0A0A] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0px_#0A0A0A] transition-all">
+        {/* CTA & MOBILE HAMBURGER BUTTON */}
+        <div className="pointer-events-auto flex items-center gap-2">
+          <Link href="/dashboard/capture" className="hidden sm:inline-flex">
+            <button className="flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-[#0A0A0A] text-white rounded-full font-label text-xs uppercase tracking-wider font-bold border-2 border-[#0A0A0A] shadow-[3px_3px_0px_#0A0A0A] sm:shadow-[4px_4px_0px_#0A0A0A] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all">
               <span>ENTER WORKSPACE</span>
               <ArrowRight className="w-3.5 h-3.5 -rotate-45" />
             </button>
           </Link>
+
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 bg-white border-2 border-[#0A0A0A] rounded-full shadow-[3px_3px_0px_#0A0A0A] text-[#0A0A0A] flex items-center justify-center cursor-pointer"
+            aria-label="Toggle mobile menu"
+          >
+            {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+          </button>
         </div>
       </header>
+
+      {/* MOBILE FLYOUT NAVIGATION DRAWER */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-x-4 top-16 z-50 md:hidden bg-white border-2 border-[#0A0A0A] rounded-[20px] p-4 shadow-[6px_6px_0px_#0A0A0A] flex flex-col gap-2 animate-in fade-in zoom-in-95 duration-150">
+          <div className="font-label text-[10px] uppercase font-bold text-[#0A0A0A]/60 px-2 py-1 border-b border-[#0A0A0A]/20">
+            // ORBITAL FLIGHT NAVIGATION
+          </div>
+          {navItems.map((item) => (
+            <button
+              key={item}
+              onClick={() => {
+                scrollToSection(item);
+                setMobileMenuOpen(false);
+              }}
+              className="text-left px-3 py-2 rounded-xl font-label text-xs uppercase font-bold text-[#0A0A0A] hover:bg-[#DEDEC8] transition-colors"
+            >
+              {item}
+            </button>
+          ))}
+          <div className="pt-2 border-t border-[#0A0A0A]/20 mt-1">
+            <Link 
+              href="/dashboard/capture" 
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full flex items-center justify-center gap-2 py-2.5 bg-[#0A0A0A] text-white rounded-full font-label text-xs uppercase font-bold border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]"
+            >
+              ENTER WORKSPACE 2.0 <ArrowRight className="w-3 h-3 -rotate-45" />
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* MAIN HERO CONTENT */}
       <main className="flex-1 w-full flex flex-col items-center pt-32 sm:pt-36 z-20 relative">
@@ -170,11 +209,11 @@ export default function LandingPage() {
             className="relative mb-6 select-none"
           >
             {/* Background 3D Stack Offset Shadow */}
-            <h1 className="text-[44px] sm:text-[72px] md:text-[96px] font-display text-[#0A0A0A]/20 leading-[0.95] tracking-tight uppercase absolute top-2 left-2 pointer-events-none select-none">
+            <h1 className="text-[34px] sm:text-[68px] md:text-[96px] font-display text-[#0A0A0A]/20 leading-[0.98] tracking-tight uppercase absolute top-1.5 sm:top-2 left-1.5 sm:left-2 pointer-events-none select-none">
               CAPTURE. PLAN.<br />
               EXECUTE.
             </h1>
-            <h1 className="text-[44px] sm:text-[72px] md:text-[96px] font-display text-[#0A0A0A] leading-[0.95] tracking-tight uppercase relative z-10">
+            <h1 className="text-[34px] sm:text-[68px] md:text-[96px] font-display text-[#0A0A0A] leading-[0.98] tracking-tight uppercase relative z-10">
               CAPTURE. PLAN.<br />
               EXECUTE.
             </h1>
@@ -185,7 +224,7 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.15 }}
-            className="text-sm sm:text-base md:text-lg text-[#0A0A0A]/80 max-w-2xl font-sans leading-relaxed mb-10"
+            className="text-xs sm:text-base md:text-lg text-[#0A0A0A]/80 max-w-2xl font-sans leading-relaxed mb-8 sm:mb-10 px-2"
           >
             Collectly 2.0 transforms scattered thoughts, meeting transcripts, and unpaid receivables into verified missions, automated follow-ups, and structured deliverables.
           </motion.p>
@@ -195,17 +234,17 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.25 }}
-            className="flex flex-col sm:flex-row items-center gap-4 mb-14"
+            className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 mb-12 sm:mb-14 w-full sm:w-auto px-4 sm:px-0"
           >
-            <Link href="/dashboard/capture">
-              <button className="flex items-center gap-3 px-8 py-4 bg-[#0A0A0A] text-white rounded-full font-label text-sm uppercase tracking-wider font-black border-2 border-[#0A0A0A] shadow-[5px_5px_0px_#0A0A0A] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[7px_7px_0px_#0A0A0A] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0px_#0A0A0A] transition-all">
+            <Link href="/dashboard/capture" className="w-full sm:w-auto">
+              <button className="w-full sm:w-auto flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-[#0A0A0A] text-white rounded-full font-label text-xs sm:text-sm uppercase tracking-wider font-black border-2 border-[#0A0A0A] shadow-[4px_4px_0px_#0A0A0A] sm:shadow-[5px_5px_0px_#0A0A0A] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[7px_7px_0px_#0A0A0A] active:translate-x-0 active:translate-y-0 transition-all">
                 <span>LAUNCH TRANSMISSION 2.0</span>
                 <ArrowRight className="w-4 h-4 -rotate-45" />
               </button>
             </Link>
 
-            <Link href="/dashboard/tasks">
-              <button className="flex items-center gap-2 px-7 py-4 bg-white text-[#0A0A0A] rounded-full font-label text-sm uppercase tracking-wider font-bold border-2 border-[#0A0A0A] shadow-[4px_4px_0px_#0A0A0A] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#0A0A0A] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0px_#0A0A0A] transition-all">
+            <Link href="/dashboard/tasks" className="w-full sm:w-auto">
+              <button className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 sm:px-7 py-3.5 sm:py-4 bg-white text-[#0A0A0A] rounded-full font-label text-xs sm:text-sm uppercase tracking-wider font-bold border-2 border-[#0A0A0A] shadow-[3px_3px_0px_#0A0A0A] sm:shadow-[4px_4px_0px_#0A0A0A] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#0A0A0A] active:translate-x-0 active:translate-y-0 transition-all">
                 <Compass className="w-4 h-4" />
                 <span>EXPLORE MISSIONS</span>
               </button>
@@ -213,21 +252,21 @@ export default function LandingPage() {
           </motion.div>
 
           {/* VINTAGE DIVIDER BAND */}
-          <div className="w-full max-w-4xl flex items-center gap-4 my-8 opacity-70">
+          <div className="w-full max-w-4xl flex items-center gap-2 sm:gap-4 my-6 sm:my-8 opacity-70">
             <div className="h-0.5 bg-[#0A0A0A] flex-1"></div>
-            <span className="font-label text-xs uppercase tracking-widest font-bold text-[#0A0A0A]">
-              TELEMETRY LOG // VERIFIED BY 1,200+ ORBITAL CREWS
+            <span className="font-label text-[10px] sm:text-xs uppercase tracking-widest font-bold text-[#0A0A0A] text-center">
+              TELEMETRY LOG // 1,200+ ORBITAL CREWS
             </span>
             <div className="h-0.5 bg-[#0A0A0A] flex-1"></div>
           </div>
 
           {/* SUB-TABS SELECTOR */}
-          <div className="flex items-center gap-3 mb-8 bg-white border-2 border-[#0A0A0A] rounded-full p-1.5 shadow-[4px_4px_0px_#0A0A0A]">
+          <div className="flex items-center gap-1.5 sm:gap-3 mb-8 bg-white border-2 border-[#0A0A0A] rounded-full p-1 sm:p-1.5 shadow-[4px_4px_0px_#0A0A0A] max-w-full overflow-x-auto whitespace-nowrap">
             {subTabs.map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-4 py-1.5 rounded-full font-label text-xs uppercase tracking-wider font-bold transition-all ${
+                className={`px-3 sm:px-4 py-1 sm:py-1.5 rounded-full font-label text-[10px] sm:text-xs uppercase tracking-wider font-bold transition-all shrink-0 ${
                   activeTab === tab
                     ? "bg-[#0A0A0A] text-white shadow-[2px_2px_0px_#0A0A0A]"
                     : "text-[#0A0A0A] hover:bg-[#DEDEC8]"

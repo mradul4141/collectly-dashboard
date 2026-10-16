@@ -33,6 +33,7 @@ export default function DocumentsPage() {
   const [isExtracting, setIsExtracting] = useState(false);
   const [reviewData, setReviewData] = useState<any>(null);
   const [search, setSearch] = useState("");
+  const [mobileView, setMobileView] = useState<"list" | "editor">("editor");
 
   const handleExtractFromDoc = async () => {
     if (!activeDoc.content.trim()) return;
@@ -112,11 +113,32 @@ export default function DocumentsPage() {
           NEW FIELD LOG
         </button>
       </div>
+      {/* Mobile Tab Switcher */}
+      <div className="flex md:hidden items-center gap-2 bg-white border-2 border-[#0A0A0A] p-1.5 rounded-full shadow-[3px_3px_0px_#0A0A0A]">
+        <button
+          onClick={() => setMobileView("list")}
+          className={`flex-1 py-1.5 rounded-full font-label text-xs uppercase font-bold transition-all ${
+            mobileView === "list" ? "bg-[#0A0A0A] text-white shadow-[2px_2px_0px_#0A0A0A]" : "text-[#0A0A0A]"
+          }`}
+        >
+          ARCHIVE LIST ({documents.length})
+        </button>
+        <button
+          onClick={() => setMobileView("editor")}
+          className={`flex-1 py-1.5 rounded-full font-label text-xs uppercase font-bold transition-all ${
+            mobileView === "editor" ? "bg-[#0A0A0A] text-white shadow-[2px_2px_0px_#0A0A0A]" : "text-[#0A0A0A]"
+          }`}
+        >
+          FIELD LOG EDITOR
+        </button>
+      </div>
 
       {/* Editor & List Split View */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 min-h-[620px]">
         {/* Left Column: Document List */}
-        <div className="md:col-span-4 bg-white border-2 border-[#0A0A0A] rounded-[22px] p-4 flex flex-col gap-3 shadow-[5px_5px_0px_#0A0A0A]">
+        <div className={`md:col-span-4 bg-white border-2 border-[#0A0A0A] rounded-[22px] p-4 flex flex-col gap-3 shadow-[5px_5px_0px_#0A0A0A] ${
+          mobileView === "list" ? "block" : "hidden md:flex"
+        }`}>
           <div className="relative">
             <Search className="w-4 h-4 absolute left-3 top-2.5 text-[#0A0A0A]/50" />
             <input
@@ -132,7 +154,10 @@ export default function DocumentsPage() {
             {filteredDocs.map((doc) => (
               <div
                 key={doc.id}
-                onClick={() => setActiveDoc(doc)}
+                onClick={() => {
+                  setActiveDoc(doc);
+                  setMobileView("editor");
+                }}
                 className={`p-3.5 rounded-[16px] border-2 transition-all cursor-pointer ${
                   activeDoc.id === doc.id
                     ? "bg-[#DEDEC8] border-[#0A0A0A] shadow-[3px_3px_0px_#0A0A0A]"
@@ -156,7 +181,9 @@ export default function DocumentsPage() {
         </div>
 
         {/* Right Column: Note Editor */}
-        <div className="md:col-span-8 bg-white border-2 border-[#0A0A0A] rounded-[22px] p-6 flex flex-col justify-between shadow-[6px_6px_0px_#0A0A0A]">
+        <div className={`md:col-span-8 bg-white border-2 border-[#0A0A0A] rounded-[22px] p-4 sm:p-6 flex flex-col justify-between shadow-[6px_6px_0px_#0A0A0A] ${
+          mobileView === "editor" ? "block" : "hidden md:flex"
+        }`}>
           <div className="space-y-4">
             <div className="flex items-center justify-between border-b-2 border-[#0A0A0A] pb-4">
               <input
